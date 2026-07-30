@@ -1,0 +1,890 @@
+<!--
+RabbitCare.co.uk transparent header
+How to use in WordPress:
+Option 1) Add this in your Site Editor header template as a Custom HTML block.
+Option 2) Add via a header/code plugin if your theme allows it.
+
+Notes:
+- Transparent by default so it blends into your hero images.
+- Uses CSS-only dropdowns and a CSS-only mobile menu.
+- Update logo text or links if needed.
+- Do not pull hero blocks up on mobile unless you intentionally want an overlay effect.
+
+Updated: Header text changed to a lighter cream over the hero image, and the Can Rabbits Eat This? page has been added to the main menu.
+-->
+
+<header class="rc-simple-header" id="rabbitcare-header">
+  <style>
+    :root {
+      --rc-header-max: 1180px;
+      --rc-header-text: #1f2d1b;
+      --rc-header-muted: #5f6558;
+      --rc-header-sage: #4e6b45;
+      --rc-header-gold: #f5d38a;
+
+      /* Top-level header text over the rabbit cover image */
+      --rc-nav-cream: #fff4d8;
+      --rc-nav-cream-soft: #f7e7bf;
+      --rc-nav-shadow: 0 2px 8px rgba(45, 33, 20, 0.55);
+      --rc-header-bg: rgba(255, 255, 255, 0.96);
+      --rc-header-shadow: 0 18px 45px rgba(64, 43, 28, 0.14);
+      --rc-header-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .rc-simple-header,
+    .rc-simple-header * {
+      box-sizing: border-box;
+    }
+
+    .rc-simple-header {
+      position: relative;
+      z-index: 9999;
+      width: 100%;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      font-family: var(--rc-header-font);
+    }
+
+    .rc-simple-header a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .rc-simple-header a:focus-visible,
+    .rc-header-toggle:focus-visible,
+    .rc-header-dropdown-label:focus-visible {
+      outline: 3px solid rgba(215, 166, 75, 0.95);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
+    .rc-header-inner {
+      width: min(var(--rc-header-max), calc(100% - 34px));
+      margin: 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent !important;
+    }
+
+    .rc-header-menu-check {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rc-header-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 45, 27, 0.18);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--rc-header-text);
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(64, 43, 28, 0.10);
+    }
+
+    .rc-header-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--rc-header-text);
+      position: relative;
+    }
+
+    .rc-header-toggle span::before,
+    .rc-header-toggle span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 20px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--rc-header-text);
+    }
+
+    .rc-header-toggle span::before { top: -7px; }
+    .rc-header-toggle span::after  { top: 7px; }
+
+    .rc-header-nav {
+      width: 100%;
+      background: transparent !important;
+    }
+
+    .rc-header-list {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(8px, 1.6vw, 22px);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rc-header-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rc-header-link,
+    .rc-header-dropdown-label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 46px;
+      padding: 10px 0;
+      color: var(--rc-nav-cream);
+      text-shadow: 0 2px 8px rgba(45, 33, 20, 0.55);
+      font-size: clamp(0.84rem, 1.05vw, 0.96rem);
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .rc-header-dropdown-label::after {
+      content: "âŒ„";
+      font-size: 0.9rem;
+      line-height: 1;
+      transform: translateY(-1px);
+      color: var(--rc-header-cream-soft);
+    }
+
+    .rc-header-link::before,
+    .rc-header-dropdown-label::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 4px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--rc-header-gold);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    .rc-header-link:hover,
+    .rc-header-dropdown-label:hover,
+    .rc-header-item:hover > .rc-header-link,
+    .rc-header-item:hover > .rc-header-dropdown-label,
+    .rc-header-item:focus-within > .rc-header-link,
+    .rc-header-item:focus-within > .rc-header-dropdown-label {
+      color: var(--rc-header-cream-soft);
+      transform: translateY(-1px);
+    }
+
+    .rc-header-item:hover > .rc-header-link::before,
+    .rc-header-item:hover > .rc-header-dropdown-label::before,
+    .rc-header-item:focus-within > .rc-header-link::before,
+    .rc-header-item:focus-within > .rc-header-dropdown-label::before {
+      transform: scaleX(1);
+    }
+
+    .rc-header-urgent {
+      color: var(--rc-header-cream) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 10px 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .rc-header-urgent::before {
+      display: block !important;
+    }
+
+    .rc-header-urgent:hover {
+      color: var(--rc-header-cream-soft) !important;
+      background: transparent !important;
+    }
+
+    /* â”€â”€ Dropdowns â”€â”€ */
+    .rc-header-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      width: 290px;
+      margin: 0;
+      padding: 12px;
+      list-style: none;
+      border-radius: 24px;
+      background: var(--rc-header-bg);
+      border: 1px solid rgba(78, 107, 69, 0.14);
+      box-shadow: var(--rc-header-shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, 8px) scale(0.98);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    }
+
+    .rc-header-dropdown::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      right: 0;
+      height: 10px;
+    }
+
+    .rc-header-item:hover > .rc-header-dropdown,
+    .rc-header-item:focus-within > .rc-header-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    /* Food Guides uses a wider 4-column panel to fit all food pages */
+    .rc-header-dropdown-wide {
+      width: min(980px, calc(100vw - 32px));
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    /* Care Guides uses standard 2-column */
+    .rc-header-dropdown-2col {
+      width: min(560px, calc(100vw - 32px));
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    /* Shop dropdown uses a roomy 2-column panel for product categories */
+    .rc-header-dropdown-shop {
+      width: min(720px, calc(100vw - 32px));
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .rc-header-shop-home a {
+      background: #fff9ef;
+      border: 1px solid rgba(78, 107, 69, 0.12);
+    }
+
+    .rc-header-dropdown a {
+      display: grid;
+      gap: 4px;
+      padding: 13px 14px;
+      border-radius: 17px;
+      color: var(--rc-header-text);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .rc-header-dropdown a:hover,
+    .rc-header-dropdown a:focus-visible {
+      background: #fff9ef;
+      transform: translateX(3px);
+    }
+
+    .rc-header-dropdown strong {
+      display: block;
+      color: var(--rc-header-sage);
+      font-size: 0.98rem;
+      line-height: 1.15;
+      font-weight: 500;
+    }
+
+    .rc-header-dropdown span {
+      display: block;
+      color: var(--rc-header-muted);
+      font-size: 0.82rem;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+.rc-header-brand {
+  display: none;
+}
+
+    /* Section divider inside a dropdown */
+    .rc-header-dropdown-divider {
+      grid-column: 1 / -1;
+      margin: 6px 2px 2px;
+      padding: 6px 12px 2px;
+      color: var(--rc-header-muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(78, 107, 69, 0.12);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rc-simple-header *,
+      .rc-simple-header *::before,
+      .rc-simple-header *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+   /* â”€â”€ Mobile â”€â”€ */
+/* Replace your mobile @media block header bits with this.
+   This removes the mobile logo, makes the mobile header shorter,
+   and keeps the menu button clean on the right. */
+
+/* Stronger mobile header height fix.
+   Replace your existing @media (max-width: 940px) block with this. */
+
+@media (max-width: 940px) {
+  .rc-simple-header {
+    position: relative !important;
+    z-index: 9999 !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .home .wp-site-blocks > header,
+  .home .wp-site-blocks > .wp-block-template-part:first-child,
+  .wp-site-blocks > header,
+  .wp-site-blocks > .wp-block-template-part:first-child {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .rc-header-brand {
+    display: none !important;
+  }
+
+  body:not(.home) .rc-simple-header {
+    margin-bottom: 0 !important;
+  }
+
+  .rc-header-inner {
+    width: calc(100% - 24px) !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    position: relative !important;
+    background: transparent !important;
+  }
+
+  .rc-header-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    color: var(--rc-header-text) !important;
+    font-size: 0.9rem !important;
+    line-height: 1 !important;
+  }
+
+  .rc-header-toggle span {
+    width: 18px !important;
+    height: 2px !important;
+  }
+
+  .rc-header-toggle span::before,
+  .rc-header-toggle span::after {
+    width: 18px !important;
+    height: 2px !important;
+  }
+
+  .rc-header-toggle span::before { top: -6px !important; }
+  .rc-header-toggle span::after  { top: 6px !important; }
+
+  .rc-header-nav {
+    position: absolute !important;
+    top: calc(100% + 4px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: none;
+    width: 100% !important;
+    max-height: calc(100vh - 58px) !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+    border-radius: 22px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border: 1px solid rgba(78, 107, 69, 0.16) !important;
+    box-shadow: var(--rc-header-shadow) !important;
+  }
+
+  .rc-header-menu-check:checked ~ .rc-header-nav {
+    display: block !important;
+  }
+
+  .rc-header-list {
+    display: grid !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .rc-header-item {
+    display: grid !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .rc-header-link,
+  .rc-header-dropdown-label {
+    width: 100% !important;
+    min-height: 42px !important;
+    justify-content: space-between !important;
+    padding: 11px 13px !important;
+    border-radius: 15px !important;
+    background: #fff9ef !important;
+    color: var(--rc-header-text) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.15 !important;
+    transform: none !important;
+  }
+
+  .rc-header-link::before,
+  .rc-header-dropdown-label::before {
+    display: none !important;
+  }
+
+  .rc-header-urgent {
+    justify-content: space-between !important;
+    background: #fff9ef !important;
+    color: var(--rc-header-text) !important;
+    padding: 11px 13px !important;
+    border-radius: 15px !important;
+  }
+
+  .rc-header-dropdown {
+    position: static !important;
+    width: 100% !important;
+    margin: 5px 0 2px !important;
+    padding: 0 0 0 10px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    display: none;
+    gap: 5px !important;
+  }
+
+  .rc-header-dropdown::before {
+    display: none !important;
+  }
+
+  .rc-header-dropdown-wide,
+  .rc-header-dropdown-2col,
+  .rc-header-dropdown-shop {
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .rc-header-dropdown a {
+    display: block !important;
+    padding: 9px 11px !important;
+    border-radius: 13px !important;
+    background: rgba(255, 255, 255, 0.72) !important;
+    transform: none !important;
+  }
+
+  .rc-header-dropdown strong {
+    font-size: 0.9rem !important;
+  }
+
+  .rc-header-dropdown span {
+    display: none !important;
+  }
+
+  .rc-header-dropdown-divider {
+    display: none !important;
+  }
+
+  .rc-header-item:hover > .rc-header-dropdown,
+  .rc-header-item:focus-within > .rc-header-dropdown {
+    display: grid !important;
+    transform: none !important;
+  }
+}
+/* Use this when the mobile header still looks tall.
+   This targets the WordPress header wrapper AND your custom RabbitCare header.
+
+   Add this at the VERY END of your header <style> block, after the existing mobile CSS.
+   Do not replace the whole header yet â€” add this last so it wins. */
+
+@media (max-width: 940px) {
+  /* WordPress/theme wrapper height reset */
+  body .wp-site-blocks > header,
+  body .wp-site-blocks > .wp-block-template-part:first-child,
+  body header.wp-block-template-part,
+  body .wp-block-template-part:has(.rc-simple-header),
+  body .wp-block-group:has(.rc-simple-header),
+  body .wp-block-group:has(#rabbitcare-header),
+  body .wp-block-template-part:has(#rabbitcare-header) {
+    min-height: 0 !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Your actual custom header */
+  #rabbitcare-header,
+  .rc-simple-header {
+    display: block !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  /* Inner row controls the real visible height */
+  #rabbitcare-header .rc-header-inner {
+    width: calc(100% - 24px) !important;
+    min-height: 0 !important;
+    height: 34px !important;
+    max-height: 34px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    background: transparent !important;
+  }
+
+  /* Remove mobile logo */
+  #rabbitcare-header .rc-header-brand {
+    display: none !important;
+  }
+
+  /* Clean small menu button */
+  #rabbitcare-header .rc-header-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    min-height: 0 !important;
+    height: 30px !important;
+    max-height: 30px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    color: var(--rc-header-text) !important;
+    font-size: 0.9rem !important;
+    line-height: 1 !important;
+  }
+
+  #rabbitcare-header .rc-header-toggle span {
+    width: 18px !important;
+    height: 2px !important;
+  }
+
+  #rabbitcare-header .rc-header-toggle span::before,
+  #rabbitcare-header .rc-header-toggle span::after {
+    width: 18px !important;
+    height: 2px !important;
+  }
+
+  #rabbitcare-header .rc-header-toggle span::before {
+    top: -6px !important;
+  }
+
+  #rabbitcare-header .rc-header-toggle span::after {
+    top: 6px !important;
+  }
+
+  /* Keep dropdown positioned correctly below the shorter header */
+  #rabbitcare-header .rc-header-nav {
+    top: calc(100% + 4px) !important;
+    max-height: calc(100vh - 48px) !important;
+  }
+}
+
+/* If it STILL looks tall, your WordPress header block has a fixed min-height set in the editor.
+   In WordPress Site Editor, click the Header group/row and remove any min-height, padding top, or padding bottom. */
+
+    /* Final colour override: keeps every top-level header item cream over the hero image.
+       Dropdown panels stay dark for readability on their pale background. */
+    #rabbitcare-header .rc-header-toggle,
+    #rabbitcare-header .rc-header-link,
+    #rabbitcare-header .rc-header-dropdown-label,
+    #rabbitcare-header .rc-header-urgent {
+      color: var(--rc-nav-cream) !important;
+      text-shadow: var(--rc-nav-shadow) !important;
+    }
+
+    #rabbitcare-header .rc-header-toggle span,
+    #rabbitcare-header .rc-header-toggle span::before,
+    #rabbitcare-header .rc-header-toggle span::after {
+      background: var(--rc-nav-cream) !important;
+      box-shadow: var(--rc-nav-shadow) !important;
+    }
+
+    #rabbitcare-header .rc-header-link:hover,
+    #rabbitcare-header .rc-header-dropdown-label:hover,
+    #rabbitcare-header .rc-header-item:hover > .rc-header-link,
+    #rabbitcare-header .rc-header-item:hover > .rc-header-dropdown-label,
+    #rabbitcare-header .rc-header-item:focus-within > .rc-header-link,
+    #rabbitcare-header .rc-header-item:focus-within > .rc-header-dropdown-label {
+      color: var(--rc-nav-cream-soft) !important;
+    }
+
+    #rabbitcare-header .rc-header-dropdown a,
+    #rabbitcare-header .rc-header-dropdown strong,
+    #rabbitcare-header .rc-header-dropdown span {
+      text-shadow: none !important;
+    }
+
+
+    /* Mobile readability fix: desktop stays cream over the hero image,
+       but the opened mobile menu returns to dark text on cream cards. */
+    @media (max-width: 940px) {
+      #rabbitcare-header .rc-header-toggle {
+        color: var(--rc-header-text) !important;
+        text-shadow: none !important;
+      }
+
+      #rabbitcare-header .rc-header-toggle span,
+      #rabbitcare-header .rc-header-toggle span::before,
+      #rabbitcare-header .rc-header-toggle span::after {
+        background: var(--rc-header-text) !important;
+        box-shadow: none !important;
+      }
+
+      #rabbitcare-header .rc-header-link,
+      #rabbitcare-header .rc-header-dropdown-label,
+      #rabbitcare-header .rc-header-urgent {
+        color: var(--rc-header-text) !important;
+        text-shadow: none !important;
+      }
+
+      #rabbitcare-header .rc-header-dropdown-label::after {
+        color: var(--rc-header-sage) !important;
+        text-shadow: none !important;
+      }
+    }
+
+  </style>
+
+  <div class="rc-header-inner">
+  <a class="rc-header-brand" href="/" aria-label="RabbitCare home">
+  <img src="/wp-content/uploads/2026/05/ChatGPT-Image-Mar-8-2026-10_34_46-AM-1024x683-1.png" alt="RabbitCare">
+</a>
+
+  <input class="rc-header-menu-check" type="checkbox" id="rc-header-menu-check" aria-hidden="true">
+
+  <label class="rc-header-toggle" for="rc-header-menu-check">
+      <span aria-hidden="true"></span>
+      Menu
+    </label>
+
+    <nav class="rc-header-nav" aria-label="Main navigation">
+      <ul class="rc-header-list">
+
+        <li class="rc-header-item">
+          <a class="rc-header-link" href="/">Home</a>
+        </li>
+
+        <!-- Care Guides â€” 2-column dropdown -->
+        <li class="rc-header-item">
+          <span class="rc-header-dropdown-label" tabindex="0">Care Guides</span>
+          <ul class="rc-header-dropdown rc-header-dropdown-2col">
+            <li><a href="/new-rabbit-owner-information"><strong>New Rabbit Owner Information</strong><span>Beginner setup and first-rabbit basics</span></a></li>
+            <li><a href="/how-big-should-a-rabbits-cage-be"><strong>Rabbit Housing Size</strong><span>Space, exercise areas and safe setup</span></a></li>
+            <li><a href="/best-bedding-for-rabbits"><strong>Best Bedding For Rabbits</strong><span>Safe, clean and comfortable bedding</span></a></li>
+            <li><a href="/rabbit-toys"><strong>Rabbit Toys</strong><span>Enrichment, chew toys and play ideas</span></a></li>
+            <li><a href="/rabbit-behaviour"><strong>Rabbit Behaviour</strong><span>Body language, binkies and thumping</span></a></li>
+            <li><a href="/rabbit-health"><strong>Rabbit Health</strong><span>Healthy signs and urgent warning signs</span></a></li>
+          </ul>
+        </li>
+
+        <!-- Food Guides â€” 4-column dropdown with veg / fruit sections -->
+        <li class="rc-header-item">
+          <span class="rc-header-dropdown-label" tabindex="0">Food Guides</span>
+          <ul class="rc-header-dropdown rc-header-dropdown-wide">
+
+            <li><a href="/what-do-rabbits-eat"><strong>What Do Rabbits Eat?</strong><span>Hay, greens, pellets and treats</span></a></li>
+            <li><a href="/best-hay-for-rabbits"><strong>Best Hay For Rabbits</strong><span>Timothy, meadow and orchard hay</span></a></li>
+
+            <li class="rc-header-dropdown-divider">Vegetables</li>
+
+            <li><a href="/can-rabbits-eat-carrots"><strong>Can Rabbits Eat Carrots?</strong><span>Sweet treat serving advice</span></a></li>
+            <li><a href="/can-rabbits-eat-celery"><strong>Can Rabbits Eat Celery?</strong><span>How to chop it safely</span></a></li>
+            <li><a href="/can-rabbits-eat-cucumber"><strong>Can Rabbits Eat Cucumber?</strong><span>Watery snack guidance</span></a></li>
+            <li><a href="/can-rabbits-eat-lettuce"><strong>Can Rabbits Eat Lettuce?</strong><span>Safe lettuce types to choose</span></a></li>
+            <li><a href="/can-rabbits-eat-peppers"><strong>Can Rabbits Eat Peppers?</strong><span>Bell peppers in small portions</span></a></li>
+            <li><a href="/can-rabbits-eat-tomatoes"><strong>Can Rabbits Eat Tomatoes?</strong><span>Safe flesh only, leaves are toxic</span></a></li>
+
+            <li class="rc-header-dropdown-divider">Fruit</li>
+
+            <li><a href="/can-rabbits-eat-apples"><strong>Can Rabbits Eat Apples?</strong><span>Remove seeds and core first</span></a></li>
+            <li><a href="/can-rabbits-eat-bananas"><strong>Can Rabbits Eat Bananas?</strong><span>High-sugar treat guidance</span></a></li>
+            <li><a href="/can-rabbits-eat-blackberries"><strong>Can Rabbits Eat Blackberries?</strong><span>Wild berry treat guidance</span></a></li>
+            <li><a href="/can-rabbits-eat-blueberries"><strong>Can Rabbits Eat Blueberries?</strong><span>Antioxidant-rich berry treats</span></a></li>
+
+            <li><a href="/can-rabbits-eat-cantaloupe-melons"><strong>Can Rabbits Eat Cantaloupe Melon?</strong><span>Remove rind and seeds first</span></a></li>
+            <li><a href="/can-rabbits-eat-cherries"><strong>Can Rabbits Eat Cherries?</strong><span>Stone, stalk and leaves removed</span></a></li>
+            <li><a href="/can-rabbits-eat-cranberries"><strong>Can Rabbits Eat Cranberries?</strong><span>Fresh only, tiny amounts</span></a></li>
+            <li><a href="/can-rabbits-eat-gooseberries"><strong>Can Rabbits Eat Gooseberries?</strong><span>Ripe berries as rare treats</span></a></li>
+
+            <li><a href="/can-rabbits-eat-grapes"><strong>Can Rabbits Eat Grapes?</strong><span>Seedless only, very small amounts</span></a></li>
+            <li><a href="/can-rabbits-eat-honeydew-melon"><strong>Can Rabbits Eat Honeydew Melon?</strong><span>Flesh only, tiny cubes</span></a></li>
+            <li><a href="/can-rabbits-eat-kiwi"><strong>Can Rabbits Eat Kiwi?</strong><span>Skin removed, small amounts</span></a></li>
+            <li><a href="/can-rabbits-eat-mangos"><strong>Can Rabbits Eat Mangos?</strong><span>Very sweet, a sliver as a treat</span></a></li>
+
+            <li><a href="/can-rabbits-eat-mulberries"><strong>Can Rabbits Eat Mulberries?</strong><span>Ripe, washed and de-stalked</span></a></li>
+            <li><a href="/can-rabbits-eat-nectarines"><strong>Can Rabbits Eat Nectarines?</strong><span>Stone removed, small cubes</span></a></li>
+            <li><a href="/can-rabbits-eat-peaches"><strong>Can Rabbits Eat Peaches?</strong><span>Flesh only, stone removed</span></a></li>
+            <li><a href="/can-rabbits-eat-pears"><strong>Can Rabbits Eat Pears?</strong><span>Remove seeds, serve in moderation</span></a></li>
+
+            <li><a href="/can-rabbits-eat-pineapple"><strong>Can Rabbits Eat Pineapple?</strong><span>Acidic, tiny portions only</span></a></li>
+            <li><a href="/can-rabbits-eat-plums"><strong>Can Rabbits Eat Plums?</strong><span>Stone removed, occasional treat</span></a></li>
+            <li><a href="/can-rabbits-eat-raspberries"><strong>Can Rabbits Eat Raspberries?</strong><span>Popular berry in small portions</span></a></li>
+            <li><a href="/can-rabbits-eat-strawberries"><strong>Can Rabbits Eat Strawberries?</strong><span>Fruit treat portions</span></a></li>
+            <li><a href="/can-rabbits-eat-watermelon"><strong>Can Rabbits Eat Watermelon?</strong><span>Seedless flesh only, small pieces</span></a></li>
+
+          </ul>
+        </li>
+
+        <li class="rc-header-item">
+          <a class="rc-header-link" href="/can-rabbits-eat-this">Can Rabbits Eat This?</a>
+        </li>
+
+        <!-- Shop â€” product categories -->
+        <li class="rc-header-item">
+          <span class="rc-header-dropdown-label" tabindex="0">Shop</span>
+          <ul class="rc-header-dropdown rc-header-dropdown-shop">
+            <li class="rc-header-shop-home">
+              <a href="/shop">
+                <strong>RabbitCare Shop</strong>
+                <span>Browse all rabbit care accessories</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/basket">
+                <strong>Basket</strong>
+                <span>View your basket before checkout</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/rabbit-toys-and-enrichment">
+                <strong>Rabbit Toys And Enrichment</strong>
+                <span>Chew toys, tunnels and foraging ideas</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/hay-bags-and-hay-feeders">
+                <strong>Hay Bags And Hay Feeders</strong>
+                <span>Keep hay accessible, tidy and off the floor</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/rabbit-grooming">
+                <strong>Rabbit Grooming</strong>
+                <span>Brushes, combs and gentle coat care tools</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/feeding-accessories">
+                <strong>Feeding Accessories</strong>
+                <span>Bowls, hay helpers and daily feeding items</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/bedding">
+                <strong>Bedding</strong>
+                <span>Soft comfort items for supervised cosy setups</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/litter-and-cleaning">
+                <strong>Litter And Cleaning</strong>
+                <span>Accessories for cleaner rabbit spaces</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/travel-and-carriers">
+                <strong>Travel And Carriers</strong>
+                <span>Carriers and travel accessories for vet trips</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/rabbit-photo-accessories">
+                <strong>Rabbit Photo Accessories</strong>
+                <span>Cute props and accessories for rabbit photos</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/product-category/rabbitcare-clothing">
+                <strong>RabbitCare Clothing</strong>
+                <span>Rabbit-themed clothing and gift items</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="rc-header-item">
+          <a class="rc-header-link" href="/guides">Learn More</a>
+        </li>
+
+        <li class="rc-header-item">
+          <a class="rc-header-link" href="/contact-us">Contact</a>
+        </li>
+
+        <li class="rc-header-item">
+          <span class="rc-header-dropdown-label" tabindex="0">Website</span>
+          <ul class="rc-header-dropdown">
+            <li><a href="/author"><strong>About the Author</strong><span>Meet Natasha and learn how RabbitCare guides are written</span></a></li>
+            <li><a href="/privacy-policy"><strong>Privacy Policy &amp; Cookies</strong><span>Privacy, cookies and website information</span></a></li>
+            <li><a href="/contact-us"><strong>Contact Us</strong><span>Questions, suggestions and feedback</span></a></li>
+          </ul>
+        </li>
+
+        <li class="rc-header-item">
+          <a class="rc-header-link rc-header-urgent" href="/rabbit-health">Urgent Signs</a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</header>

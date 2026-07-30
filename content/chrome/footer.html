@@ -1,0 +1,516 @@
+<!--
+RabbitCare.co.uk footer
+How to use in WordPress:
+1) Open the Site Editor / Footer template.
+2) Add a Custom HTML block.
+3) Paste everything below.
+
+Updated:
+- Added RabbitCare Shop links.
+- Added WooCommerce product category links.
+- Added contact email: natasha@rabbitcare.co.uk.
+- Kept food guide dropdowns and rabbit health notice.
+- Added Author page and Rabbit Food Checker links.
+-->
+
+<footer class="rc-footer" id="rabbitcare-footer">
+  <style>
+    :root {
+      --rc-footer-bg: #fef4f0;
+      --rc-footer-cream: #fff9ef;
+      --rc-footer-sage: #7f9b72;
+      --rc-footer-sage-dark: #4e6b45;
+      --rc-footer-moss: #2f4a2e;
+      --rc-footer-gold: #d7a64b;
+      --rc-footer-charcoal: #2d2d2b;
+      --rc-footer-muted: #6f6a61;
+      --rc-footer-white: #ffffff;
+      --rc-footer-shadow: 0 24px 70px rgba(64, 43, 28, 0.12);
+      --rc-footer-max: 1440px;
+      --rc-footer-heading: Georgia, "Times New Roman", serif;
+      --rc-footer-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .rc-footer,
+    .rc-footer * {
+      box-sizing: border-box;
+    }
+
+    .rc-footer {
+      width: 100%;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #fef4f0 !important;
+      color: var(--rc-footer-charcoal);
+      font-family: var(--rc-footer-body);
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
+    .rc-footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .rc-footer a:focus-visible {
+      outline: 3px solid rgba(215, 166, 75, 0.95);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
+    .rc-footer-wrap {
+      width: min(var(--rc-footer-max), calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .rc-footer-main {
+      padding: 56px 0 28px;
+      background: #fef4f0 !important;
+    }
+
+    .rc-footer-card {
+      display: grid;
+      grid-template-columns: 0.9fr 1.8fr;
+      gap: clamp(28px, 5vw, 58px);
+      align-items: start;
+      padding: clamp(26px, 5vw, 46px);
+      border-radius: 42px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(78, 107, 69, 0.14);
+      box-shadow: var(--rc-footer-shadow);
+    }
+
+    .rc-footer-brand {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .rc-footer-logo-link {
+      display: inline-grid;
+      justify-items: start;
+      gap: 12px;
+      width: fit-content;
+    }
+
+    .rc-footer-logo {
+      display: block;
+      width: 160px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .rc-footer-title {
+      display: grid;
+      gap: 5px;
+    }
+
+    .rc-footer-title strong {
+      display: block;
+      margin: 0;
+      font-family: var(--rc-footer-heading);
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+      color: var(--rc-footer-moss);
+    }
+
+    .rc-footer-title span {
+      display: block;
+      color: var(--rc-footer-sage-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .rc-footer-about {
+      max-width: 460px;
+      margin: 0;
+      color: var(--rc-footer-muted);
+      font-size: 1rem;
+    }
+
+    .rc-footer-contact-box {
+      display: grid;
+      gap: 7px;
+      padding: 15px 18px;
+      border-radius: 22px;
+      background: #fff9ef;
+      border: 1px solid rgba(78, 107, 69, 0.14);
+      color: var(--rc-footer-muted);
+      font-size: 0.94rem;
+    }
+
+    .rc-footer-contact-box strong {
+      color: var(--rc-footer-moss);
+    }
+
+    .rc-footer-contact-box a {
+      color: var(--rc-footer-sage-dark);
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .rc-footer-contact-box a:hover {
+      color: var(--rc-footer-moss);
+    }
+
+    .rc-footer-notice {
+      margin: 0;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: #fff9ef;
+      border-left: 5px solid var(--rc-footer-gold);
+      color: var(--rc-footer-muted);
+      font-size: 0.94rem;
+    }
+
+    .rc-footer-notice strong {
+      color: var(--rc-footer-moss);
+    }
+
+    .rc-footer-links {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .rc-footer-column {
+      min-width: 0;
+    }
+
+    .rc-footer-column h2 {
+      margin: 0 0 14px;
+      color: var(--rc-footer-moss);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .rc-footer-column ul {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rc-footer-column a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--rc-footer-muted);
+      font-size: 0.94rem;
+      font-weight: 500;
+      line-height: 1.25;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .rc-footer-column a::before {
+      content: "â€º";
+      color: var(--rc-footer-gold);
+      font-weight: 900;
+      transform: translateY(-1px);
+      flex-shrink: 0;
+    }
+
+    .rc-footer-column a:hover {
+      color: var(--rc-footer-sage-dark);
+      transform: translateX(4px);
+    }
+
+    .rc-footer-details {
+      border-radius: 14px;
+      background: #fff9ef;
+      border: 1px solid rgba(78, 107, 69, 0.12);
+      overflow: hidden;
+    }
+
+    .rc-footer-details + .rc-footer-details {
+      margin-top: 8px;
+    }
+
+    .rc-footer-details summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.92rem;
+      line-height: 1.2;
+      padding: 11px 14px;
+      color: var(--rc-footer-moss);
+      font-weight: 800;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .rc-footer-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .rc-footer-details summary::after {
+      content: "âŒ„";
+      color: var(--rc-footer-sage-dark);
+      font-size: 0.9rem;
+      transition: transform 0.2s ease;
+    }
+
+    .rc-footer-details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .rc-footer-details ul {
+      padding: 0 15px 15px;
+    }
+
+    .rc-footer-details a {
+      font-size: 0.9rem;
+    }
+
+    .rc-footer-bottom {
+      padding: 0 0 34px;
+      background: #fef4f0 !important;
+    }
+
+    .rc-footer-bottom-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(78, 107, 69, 0.16);
+      color: var(--rc-footer-muted);
+      font-size: 0.9rem;
+    }
+
+    .rc-footer-bottom-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .rc-footer-bottom-links a {
+      color: var(--rc-footer-muted);
+      transition: color 0.2s ease;
+    }
+
+    .rc-footer-bottom-links a:hover {
+      color: var(--rc-footer-sage-dark);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rc-footer *,
+      .rc-footer *::before,
+      .rc-footer *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .rc-footer-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 980px) {
+      .rc-footer-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .rc-footer-wrap {
+        width: calc(100% - 24px);
+      }
+
+      .rc-footer-main {
+        padding: 40px 0 24px;
+      }
+
+      .rc-footer-card {
+        padding: 22px;
+        border-radius: 30px;
+      }
+
+      .rc-footer-logo-link {
+        justify-items: start;
+      }
+
+      .rc-footer-logo {
+        width: 130px;
+        height: auto;
+      }
+
+      .rc-footer-title strong {
+        font-size: clamp(1.85rem, 10vw, 2.6rem);
+      }
+
+      .rc-footer-links {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .rc-footer-bottom-inner {
+        display: grid;
+        justify-items: start;
+      }
+
+      .rc-footer-bottom-links {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+
+  <div class="rc-footer-main">
+    <div class="rc-footer-wrap">
+      <div class="rc-footer-card">
+
+        <!-- Brand / about -->
+        <div class="rc-footer-brand">
+          <a class="rc-footer-logo-link" href="/" aria-label="RabbitCare.co.uk home">
+            <img class="rc-footer-logo" src="https://rabbitcare.co.uk/wp-content/uploads/2026/05/ChatGPT-Image-Mar-8-2026-10_34_46-AM-2.png" alt="RabbitCare.co.uk logo" loading="lazy" decoding="async">
+            <span class="rc-footer-title">
+              <strong>RabbitCare</strong>
+              <span>UK rabbit advice &amp; shop</span>
+            </span>
+          </a>
+
+          <p class="rc-footer-about">
+            RabbitCare.co.uk shares simple, practical rabbit care guides for UK owners, plus carefully chosen rabbit care accessories, toys, grooming tools, feeding items and gift products.
+          </p>
+
+          <div class="rc-footer-contact-box">
+            <strong>Need help or have a question?</strong>
+            <span>Email: <a href="mailto:natasha@rabbitcare.co.uk">natasha@rabbitcare.co.uk</a></span>
+          </div>
+
+          <p class="rc-footer-notice">
+            <strong>Important:</strong> RabbitCare.co.uk provides general information only. If your rabbit stops eating, stops pooing, seems in pain or is suddenly unwell, contact a rabbit-savvy vet urgently.
+          </p>
+        </div>
+
+        <!-- Navigation columns -->
+        <nav class="rc-footer-links" aria-label="Footer navigation">
+
+          <!-- Column 1: Care guides -->
+          <div class="rc-footer-column">
+            <h2>Care Guides</h2>
+            <ul>
+              <li><a href="/new-rabbit-owner-information">New Rabbit Owner Information</a></li>
+              <li><a href="/how-big-should-a-rabbits-cage-be">Rabbit Housing Size</a></li>
+              <li><a href="/best-bedding-for-rabbits">Best Bedding For Rabbits</a></li>
+              <li><a href="/rabbit-toys">Rabbit Toys</a></li>
+              <li><a href="/rabbit-behaviour">Rabbit Behaviour</a></li>
+              <li><a href="/rabbit-health">Rabbit Health</a></li>
+              <li><a href="/what-do-rabbits-eat">What Do Rabbits Eat?</a></li>
+              <li><a href="/best-hay-for-rabbits">Best Hay For Rabbits</a></li>
+              <li><a href="/can-rabbits-eat-this">Can Rabbits Eat This? Food Checker</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 2: Shop -->
+          <div class="rc-footer-column">
+            <h2>Shop</h2>
+            <ul>
+              <li><a href="/shop">RabbitCare Shop</a></li>
+              <li><a href="/basket">Basket</a></li>
+              <li><a href="/product-category/rabbit-toys-and-enrichment">Rabbit Toys And Enrichment</a></li>
+              <li><a href="/product-category/hay-bags-and-hay-feeders">Hay Bags And Hay Feeders</a></li>
+              <li><a href="/product-category/rabbit-grooming">Rabbit Grooming</a></li>
+              <li><a href="/product-category/feeding-accessories">Feeding Accessories</a></li>
+              <li><a href="/product-category/bedding">Bedding</a></li>
+              <li><a href="/product-category/litter-and-cleaning">Litter And Cleaning</a></li>
+              <li><a href="/product-category/travel-and-carriers">Travel And Carriers</a></li>
+              <li><a href="/product-category/rabbit-photo-accessories">Rabbit Photo Accessories</a></li>
+              <li><a href="/product-category/rabbitcare-clothing">RabbitCare Clothing</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Food guides -->
+          <div class="rc-footer-column rc-footer-food-column">
+            <h2>Food Guides</h2>
+
+            <ul style="margin-bottom: 10px;">
+              <li><a href="/can-rabbits-eat-this">Can Rabbits Eat This? Food Checker</a></li>
+              <li><a href="/what-do-rabbits-eat">What Do Rabbits Eat?</a></li>
+              <li><a href="/best-hay-for-rabbits">Best Hay For Rabbits</a></li>
+            </ul>
+
+            <details class="rc-footer-details">
+              <summary>Vegetables</summary>
+              <ul>
+                <li><a href="/can-rabbits-eat-carrots">Can Rabbits Eat Carrots?</a></li>
+                <li><a href="/can-rabbits-eat-celery">Can Rabbits Eat Celery?</a></li>
+                <li><a href="/can-rabbits-eat-cucumber">Can Rabbits Eat Cucumber?</a></li>
+                <li><a href="/can-rabbits-eat-lettuce">Can Rabbits Eat Lettuce?</a></li>
+                <li><a href="/can-rabbits-eat-peppers">Can Rabbits Eat Peppers?</a></li>
+                <li><a href="/can-rabbits-eat-tomatoes">Can Rabbits Eat Tomatoes?</a></li>
+              </ul>
+            </details>
+
+            <details class="rc-footer-details">
+              <summary>Fruit</summary>
+              <ul>
+                <li><a href="/can-rabbits-eat-apples">Can Rabbits Eat Apples?</a></li>
+                <li><a href="/can-rabbits-eat-bananas">Can Rabbits Eat Bananas?</a></li>
+                <li><a href="/can-rabbits-eat-blackberries">Can Rabbits Eat Blackberries?</a></li>
+                <li><a href="/can-rabbits-eat-blueberries">Can Rabbits Eat Blueberries?</a></li>
+                <li><a href="/can-rabbits-eat-cantaloupe-melons">Can Rabbits Eat Cantaloupe Melon?</a></li>
+                <li><a href="/can-rabbits-eat-cherries">Can Rabbits Eat Cherries?</a></li>
+                <li><a href="/can-rabbits-eat-cranberries">Can Rabbits Eat Cranberries?</a></li>
+                <li><a href="/can-rabbits-eat-gooseberries">Can Rabbits Eat Gooseberries?</a></li>
+                <li><a href="/can-rabbits-eat-grapes">Can Rabbits Eat Grapes?</a></li>
+                <li><a href="/can-rabbits-eat-honeydew-melon">Can Rabbits Eat Honeydew Melon?</a></li>
+                <li><a href="/can-rabbits-eat-kiwi">Can Rabbits Eat Kiwi?</a></li>
+                <li><a href="/can-rabbits-eat-mangos">Can Rabbits Eat Mangos?</a></li>
+                <li><a href="/can-rabbits-eat-mulberries">Can Rabbits Eat Mulberries?</a></li>
+                <li><a href="/can-rabbits-eat-nectarines">Can Rabbits Eat Nectarines?</a></li>
+                <li><a href="/can-rabbits-eat-peaches">Can Rabbits Eat Peaches?</a></li>
+                <li><a href="/can-rabbits-eat-pears">Can Rabbits Eat Pears?</a></li>
+                <li><a href="/can-rabbits-eat-pineapple">Can Rabbits Eat Pineapple?</a></li>
+                <li><a href="/can-rabbits-eat-plums">Can Rabbits Eat Plums?</a></li>
+                <li><a href="/can-rabbits-eat-raspberries">Can Rabbits Eat Raspberries?</a></li>
+                <li><a href="/can-rabbits-eat-strawberries">Can Rabbits Eat Strawberries?</a></li>
+                <li><a href="/can-rabbits-eat-watermelon">Can Rabbits Eat Watermelon?</a></li>
+              </ul>
+            </details>
+          </div>
+
+          <!-- Column 4: Website / contact -->
+          <div class="rc-footer-column">
+            <h2>Website</h2>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/guides">Learn More</a></li>
+              <li><a href="/author">About the Author</a></li>
+              <li><a href="/contact-us">Contact Us</a></li>
+              <li><a href="mailto:natasha@rabbitcare.co.uk">Email Natasha</a></li>
+              <li><a href="/privacy-policy">Privacy Policy &amp; Cookies</a></li>
+              <li><a href="/rabbit-health">Urgent Rabbit Health Signs</a></li>
+            </ul>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="rc-footer-bottom">
+    <div class="rc-footer-wrap rc-footer-bottom-inner">
+      <span>Â© 2026 RabbitCare.co.uk. Created by Natasha Card. All rights reserved.</span>
+      <div class="rc-footer-bottom-links" aria-label="Footer small links">
+        <a href="/privacy-policy">Privacy &amp; Cookies</a>
+        <a href="/contact-us">Contact</a>
+        <a href="/author">About the Author</a>
+        <a href="mailto:natasha@rabbitcare.co.uk">natasha@rabbitcare.co.uk</a>
+        <a href="/rabbit-health">Urgent Rabbit Health Signs</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
