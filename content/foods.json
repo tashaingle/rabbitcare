@@ -1,0 +1,848 @@
+[
+  {
+    "name": "Apples",
+    "aliases": [
+      "apple"
+    ],
+    "emoji": "🍎",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Treat only",
+    "summary": "Rabbits can eat small pieces of apple flesh occasionally, but apples are sugary and should be treated as a small treat.",
+    "frequency": "Occasionally",
+    "amount": "Tiny pieces only",
+    "prepare": "Remove seeds and core",
+    "warning": "Seeds are unsafe",
+    "url": "/can-rabbits-eat-apples"
+  },
+  {
+    "name": "Bananas",
+    "aliases": [
+      "banana"
+    ],
+    "emoji": "🍌",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Treat only",
+    "summary": "Banana is very sweet, so rabbits should only have a tiny amount as an occasional treat.",
+    "frequency": "Rare treat",
+    "amount": "A very small slice",
+    "prepare": "Peel first",
+    "warning": "Very high sugar",
+    "url": "/can-rabbits-eat-bananas"
+  },
+  {
+    "name": "Blackberries",
+    "aliases": [
+      "blackberry"
+    ],
+    "emoji": "🫐",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Blackberries can be offered in small amounts as an occasional berry treat.",
+    "frequency": "Occasionally",
+    "amount": "One or two berries",
+    "prepare": "Wash well",
+    "warning": "Too much fruit can upset digestion",
+    "url": "/can-rabbits-eat-blackberries"
+  },
+  {
+    "name": "Blueberries",
+    "aliases": [
+      "blueberry"
+    ],
+    "emoji": "🫐",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Blueberries can be a small occasional treat for rabbits, but they should not be fed too often.",
+    "frequency": "Occasionally",
+    "amount": "Two or three berries",
+    "prepare": "Wash well",
+    "warning": "High sugar treat",
+    "url": "/can-rabbits-eat-blueberries"
+  },
+  {
+    "name": "Cantaloupe melon",
+    "aliases": [
+      "cantaloupe",
+      "cantaloupe melon",
+      "melon"
+    ],
+    "emoji": "🍈",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Cantaloupe melon flesh can be offered in tiny amounts, but it is sweet and watery.",
+    "frequency": "Rare treat",
+    "amount": "Tiny cubes",
+    "prepare": "Remove rind and seeds",
+    "warning": "Too much can upset digestion",
+    "url": "/can-rabbits-eat-cantaloupe-melon"
+  },
+  {
+    "name": "Carrots",
+    "aliases": [
+      "carrot"
+    ],
+    "emoji": "🥕",
+    "category": "Vegetable",
+    "status": "treat",
+    "label": "Treat only",
+    "summary": "Rabbits can eat carrot, but it is sugary and is best offered in small amounts as a treat rather than a main food.",
+    "frequency": "Occasionally",
+    "amount": "Small pieces",
+    "prepare": "Wash and chop",
+    "warning": "High sugar for a vegetable",
+    "url": "/can-rabbits-eat-carrots"
+  },
+  {
+    "name": "Celery",
+    "aliases": [
+      "celery"
+    ],
+    "emoji": "🥬",
+    "category": "Vegetable",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Celery can be offered to rabbits when washed and chopped into short pieces.",
+    "frequency": "In moderation",
+    "amount": "Small chopped pieces",
+    "prepare": "Wash and chop short",
+    "warning": "Long strings can be awkward",
+    "url": "/can-rabbits-eat-celery"
+  },
+  {
+    "name": "Cherries",
+    "aliases": [
+      "cherry"
+    ],
+    "emoji": "🍒",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Cherry flesh may be offered in tiny amounts, but the stone, stalk and leaves must be removed.",
+    "frequency": "Rare treat",
+    "amount": "Tiny piece of flesh",
+    "prepare": "Remove stone, stalk and leaves",
+    "warning": "Stone, stalk and leaves are unsafe",
+    "url": "/can-rabbits-eat-cherries"
+  },
+  {
+    "name": "Avocado",
+    "aliases": [
+      "avocados"
+    ],
+    "emoji": "🥑",
+    "category": "Unsafe food",
+    "status": "toxic",
+    "label": "Do not feed",
+    "summary": "Avocado should not be fed to rabbits. Contact a vet urgently if your rabbit eats avocado.",
+    "frequency": "Never",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Unsafe for rabbits",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Basil",
+    "aliases": [
+      "fresh basil"
+    ],
+    "emoji": "🌿",
+    "category": "Herb",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Fresh basil can be offered in small amounts as part of a varied fresh food routine.",
+    "frequency": "In moderation",
+    "amount": "A few leaves",
+    "prepare": "Wash well",
+    "warning": "Introduce slowly",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Bread",
+    "aliases": [
+      "toast",
+      "crackers",
+      "biscuits"
+    ],
+    "emoji": "🍞",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Bread, toast, crackers and biscuits are not suitable rabbit foods and can upset digestion.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Starchy processed food",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Broccoli",
+    "aliases": [
+      "broccoli florets",
+      "broccoli leaves"
+    ],
+    "emoji": "🥦",
+    "category": "Vegetable",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Broccoli can be offered in small amounts, but some rabbits are sensitive to brassicas.",
+    "frequency": "Occasionally",
+    "amount": "Small pieces",
+    "prepare": "Wash and chop",
+    "warning": "May cause gas in some rabbits",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Cabbage",
+    "aliases": [
+      "green cabbage",
+      "savoy cabbage",
+      "red cabbage"
+    ],
+    "emoji": "🥬",
+    "category": "Vegetable",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Cabbage can be fed sparingly, but introduce it slowly because some rabbits are sensitive to brassicas.",
+    "frequency": "Occasionally",
+    "amount": "Small leaf pieces",
+    "prepare": "Wash well",
+    "warning": "May cause gas in some rabbits",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Cauliflower",
+    "aliases": [
+      "cauliflower leaves"
+    ],
+    "emoji": "🥦",
+    "category": "Vegetable",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Cauliflower leaves may be better tolerated than the white curd, but any cauliflower should be introduced slowly.",
+    "frequency": "Occasionally",
+    "amount": "Small pieces",
+    "prepare": "Wash well",
+    "warning": "May cause gas in some rabbits",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Coriander",
+    "aliases": [
+      "cilantro",
+      "fresh coriander"
+    ],
+    "emoji": "🌿",
+    "category": "Herb",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Fresh coriander can be offered in small amounts as a fragrant leafy herb.",
+    "frequency": "In moderation",
+    "amount": "A few sprigs",
+    "prepare": "Wash well",
+    "warning": "Introduce slowly",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Courgette",
+    "aliases": [
+      "zucchini",
+      "courgettes",
+      "zucchinis"
+    ],
+    "emoji": "🥒",
+    "category": "Vegetable",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Courgette can be offered in small amounts as a mild, watery vegetable.",
+    "frequency": "In moderation",
+    "amount": "Small slices",
+    "prepare": "Wash and slice",
+    "warning": "Watery, not a hay replacement",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Garlic",
+    "aliases": [
+      "garlic cloves"
+    ],
+    "emoji": "🧄",
+    "category": "Unsafe food",
+    "status": "toxic",
+    "label": "Do not feed",
+    "summary": "Garlic should not be fed to rabbits. Contact a vet if your rabbit eats garlic.",
+    "frequency": "Never",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Unsafe for rabbits",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Kale",
+    "aliases": [
+      "curly kale"
+    ],
+    "emoji": "🥬",
+    "category": "Leafy green",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Kale can be part of a varied rotation, but it should not be the only leafy green offered.",
+    "frequency": "In rotation",
+    "amount": "Small handful mixed with greens",
+    "prepare": "Wash well",
+    "warning": "Introduce gradually",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Mint",
+    "aliases": [
+      "fresh mint"
+    ],
+    "emoji": "🌿",
+    "category": "Herb",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Fresh mint can be offered in small amounts and many rabbits enjoy the smell and taste.",
+    "frequency": "In moderation",
+    "amount": "A few leaves",
+    "prepare": "Wash well",
+    "warning": "Introduce slowly",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Mushrooms",
+    "aliases": [
+      "mushroom"
+    ],
+    "emoji": "🍄",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Mushrooms are best avoided for rabbits, especially wild mushrooms which may be dangerous.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Avoid mushrooms",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Nuts and seeds",
+    "aliases": [
+      "nuts",
+      "seeds",
+      "sunflower seeds",
+      "pumpkin seeds"
+    ],
+    "emoji": "🥜",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Nuts and seeds are not suitable everyday rabbit foods and can be too fatty or difficult to digest.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Too fatty for rabbits",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Parsley",
+    "aliases": [
+      "fresh parsley"
+    ],
+    "emoji": "🌿",
+    "category": "Herb",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Fresh parsley can be offered in small amounts as part of a varied leafy green rotation.",
+    "frequency": "In moderation",
+    "amount": "A few sprigs",
+    "prepare": "Wash well",
+    "warning": "Introduce slowly",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Potato",
+    "aliases": [
+      "potatoes",
+      "potato peel",
+      "potato peels"
+    ],
+    "emoji": "🥔",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Potato is starchy and not a suitable rabbit food. Green potato parts are especially unsafe.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Starchy and unsuitable",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Rocket",
+    "aliases": [
+      "arugula"
+    ],
+    "emoji": "🥬",
+    "category": "Leafy green",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Rocket can be offered as part of a varied leafy green rotation.",
+    "frequency": "In moderation",
+    "amount": "Small handful mixed with greens",
+    "prepare": "Wash well",
+    "warning": "Peppery, introduce slowly",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Romaine lettuce",
+    "aliases": [
+      "cos lettuce",
+      "romaine",
+      "cos"
+    ],
+    "emoji": "🥗",
+    "category": "Leafy green",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Romaine or cos lettuce is usually a better choice than iceberg lettuce when introduced gradually.",
+    "frequency": "In moderation",
+    "amount": "Small leaves mixed with greens",
+    "prepare": "Wash well",
+    "warning": "Avoid iceberg lettuce",
+    "url": "/can-rabbits-eat-lettuce"
+  },
+  {
+    "name": "Spinach",
+    "aliases": [
+      "baby spinach"
+    ],
+    "emoji": "🥬",
+    "category": "Leafy green",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Spinach can be offered sparingly as part of a rotation, but it should not be fed heavily every day.",
+    "frequency": "Occasionally",
+    "amount": "Small amount mixed with greens",
+    "prepare": "Wash well",
+    "warning": "Use sparingly in rotation",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Spring greens",
+    "aliases": [
+      "spring green",
+      "collard greens",
+      "collards"
+    ],
+    "emoji": "🥬",
+    "category": "Leafy green",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Spring greens can be offered as part of a varied leafy green rotation when introduced slowly.",
+    "frequency": "In moderation",
+    "amount": "Small leaves mixed with greens",
+    "prepare": "Wash well",
+    "warning": "Introduce gradually",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Sweetcorn",
+    "aliases": [
+      "corn",
+      "maize",
+      "corn on the cob"
+    ],
+    "emoji": "🌽",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Sweetcorn is not a suitable rabbit food and can be difficult for rabbits to digest.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Difficult to digest",
+    "url": "/what-do-rabbits-eat"
+  },
+  {
+    "name": "Chocolate",
+    "aliases": [
+      "cocoa",
+      "cacao"
+    ],
+    "emoji": "🍫",
+    "category": "Unsafe food",
+    "status": "toxic",
+    "label": "Do not feed",
+    "summary": "Chocolate should not be fed to rabbits. Contact a vet urgently if your rabbit eats chocolate.",
+    "frequency": "Never",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Unsafe for rabbits",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Cranberries",
+    "aliases": [
+      "cranberry"
+    ],
+    "emoji": "🍒",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Fresh cranberries are sharp and should only be offered in tiny amounts, very occasionally.",
+    "frequency": "Rare treat",
+    "amount": "One or two",
+    "prepare": "Fresh and washed",
+    "warning": "Avoid dried sweetened cranberries",
+    "url": "/can-rabbits-eat-cranberries"
+  },
+  {
+    "name": "Cucumber",
+    "aliases": [
+      "cucumbers"
+    ],
+    "emoji": "🥒",
+    "category": "Vegetable",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Cucumber is watery and refreshing, but it should only be a small part of the diet.",
+    "frequency": "In moderation",
+    "amount": "Small slices",
+    "prepare": "Wash and slice",
+    "warning": "Watery, not a hay replacement",
+    "url": "/can-rabbits-eat-cucumber"
+  },
+  {
+    "name": "Gooseberries",
+    "aliases": [
+      "gooseberry"
+    ],
+    "emoji": "🍇",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Ripe gooseberries can be a rare treat in very small amounts.",
+    "frequency": "Rare treat",
+    "amount": "One berry",
+    "prepare": "Wash, top and tail",
+    "warning": "Only ripe berries",
+    "url": "/can-rabbits-eat-gooseberries"
+  },
+  {
+    "name": "Grapes",
+    "aliases": [
+      "grape"
+    ],
+    "emoji": "🍇",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Rabbits can have a very small amount of seedless grape occasionally, but grapes are sugary.",
+    "frequency": "Rare treat",
+    "amount": "Tiny piece",
+    "prepare": "Seedless and washed",
+    "warning": "High sugar",
+    "url": "/can-rabbits-eat-grapes"
+  },
+  {
+    "name": "Honeydew melon",
+    "aliases": [
+      "honeydew",
+      "melon"
+    ],
+    "emoji": "🍈",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Honeydew melon flesh can be offered in tiny cubes as a rare treat.",
+    "frequency": "Rare treat",
+    "amount": "Tiny cubes",
+    "prepare": "Remove rind and seeds",
+    "warning": "Sweet and watery",
+    "url": "/can-rabbits-eat-honeydew-melon"
+  },
+  {
+    "name": "Iceberg lettuce",
+    "aliases": [
+      "iceberg"
+    ],
+    "emoji": "🥗",
+    "category": "Unsafe food",
+    "status": "avoid",
+    "label": "Avoid",
+    "summary": "Iceberg lettuce is best avoided. Choose safer leafy greens and introduce them slowly.",
+    "frequency": "Avoid",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Choose safer greens",
+    "url": "/can-rabbits-eat-lettuce"
+  },
+  {
+    "name": "Kiwi",
+    "aliases": [
+      "kiwis"
+    ],
+    "emoji": "🥝",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Kiwi can be offered in small amounts as an occasional treat.",
+    "frequency": "Occasionally",
+    "amount": "Tiny piece",
+    "prepare": "Remove skin",
+    "warning": "Tangy and sugary",
+    "url": "/can-rabbits-eat-kiwi"
+  },
+  {
+    "name": "Lettuce",
+    "aliases": [
+      "lettuces"
+    ],
+    "emoji": "🥗",
+    "category": "Vegetable",
+    "status": "caution",
+    "label": "Depends on type",
+    "summary": "Some lettuce types are better than others. Avoid iceberg lettuce and choose suitable leafy varieties.",
+    "frequency": "In moderation",
+    "amount": "Small amount",
+    "prepare": "Wash well",
+    "warning": "Avoid iceberg lettuce",
+    "url": "/can-rabbits-eat-lettuce"
+  },
+  {
+    "name": "Mangos",
+    "aliases": [
+      "mango",
+      "mangoes"
+    ],
+    "emoji": "🥭",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Mango is very sweet, so only offer a tiny sliver as a rare treat.",
+    "frequency": "Rare treat",
+    "amount": "Tiny sliver",
+    "prepare": "Remove skin and stone",
+    "warning": "Very high sugar",
+    "url": "/can-rabbits-eat-mangos"
+  },
+  {
+    "name": "Mulberries",
+    "aliases": [
+      "mulberry"
+    ],
+    "emoji": "🫐",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Ripe mulberries can be offered in small amounts as an occasional treat.",
+    "frequency": "Occasionally",
+    "amount": "A few berries",
+    "prepare": "Wash and de-stalk",
+    "warning": "Sweet fruit treat",
+    "url": "/can-rabbits-eat-mulberries"
+  },
+  {
+    "name": "Nectarines",
+    "aliases": [
+      "nectarine"
+    ],
+    "emoji": "🍑",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Nectarine flesh can be offered in tiny amounts, but the stone must be removed.",
+    "frequency": "Rare treat",
+    "amount": "Small cubes",
+    "prepare": "Remove stone",
+    "warning": "Stone is unsafe",
+    "url": "/can-rabbits-eat-nectarine"
+  },
+  {
+    "name": "Onion",
+    "aliases": [
+      "onions",
+      "garlic"
+    ],
+    "emoji": "🧅",
+    "category": "Unsafe food",
+    "status": "toxic",
+    "label": "Do not feed",
+    "summary": "Onion and garlic should not be fed to rabbits. Contact a vet if your rabbit eats them.",
+    "frequency": "Never",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Unsafe for rabbits",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Peaches",
+    "aliases": [
+      "peach"
+    ],
+    "emoji": "🍑",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Peach flesh can be offered in tiny amounts, but the stone must always be removed.",
+    "frequency": "Rare treat",
+    "amount": "Tiny piece",
+    "prepare": "Remove stone",
+    "warning": "Stone is unsafe",
+    "url": "/can-rabbits-eat-peaches"
+  },
+  {
+    "name": "Pears",
+    "aliases": [
+      "pear"
+    ],
+    "emoji": "🍐",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Pear can be offered in small amounts occasionally, with seeds removed.",
+    "frequency": "Occasionally",
+    "amount": "Tiny pieces",
+    "prepare": "Remove seeds and core",
+    "warning": "Sugary fruit",
+    "url": "/can-rabbits-eat-pears"
+  },
+  {
+    "name": "Peppers",
+    "aliases": [
+      "pepper",
+      "bell pepper",
+      "bell peppers",
+      "sweet pepper",
+      "sweet peppers",
+      "capsicum"
+    ],
+    "emoji": "🫑",
+    "category": "Vegetable",
+    "status": "safe",
+    "label": "Usually safe",
+    "summary": "Bell peppers can be offered in small portions as part of a varied fresh food routine.",
+    "frequency": "In moderation",
+    "amount": "Small strips",
+    "prepare": "Remove seeds and stalk",
+    "warning": "Introduce slowly",
+    "url": "/can-rabbits-eat-peppers"
+  },
+  {
+    "name": "Pineapple",
+    "aliases": [
+      "pineapples"
+    ],
+    "emoji": "🍍",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Pineapple is acidic and sugary, so only a tiny amount should be offered occasionally.",
+    "frequency": "Rare treat",
+    "amount": "Tiny piece",
+    "prepare": "Remove skin and core",
+    "warning": "Acidic and sugary",
+    "url": "/can-rabbits-eat-pineapple"
+  },
+  {
+    "name": "Plums",
+    "aliases": [
+      "plum"
+    ],
+    "emoji": "🍑",
+    "category": "Fruit",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Plum flesh can be offered occasionally in a tiny amount, but the stone must be removed.",
+    "frequency": "Rare treat",
+    "amount": "Tiny piece",
+    "prepare": "Remove stone",
+    "warning": "Stone is unsafe",
+    "url": "/can-rabbits-eat-plums"
+  },
+  {
+    "name": "Raspberries",
+    "aliases": [
+      "raspberry"
+    ],
+    "emoji": "🍓",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Raspberries can be offered in small amounts as an occasional berry treat.",
+    "frequency": "Occasionally",
+    "amount": "One or two berries",
+    "prepare": "Wash well",
+    "warning": "Sugary treat",
+    "url": "/can-rabbits-eat-raspberries"
+  },
+  {
+    "name": "Rhubarb",
+    "aliases": [
+      "rhubarb leaves"
+    ],
+    "emoji": "⚠️",
+    "category": "Unsafe food",
+    "status": "toxic",
+    "label": "Do not feed",
+    "summary": "Rhubarb should not be fed to rabbits. Contact a vet urgently if your rabbit eats rhubarb.",
+    "frequency": "Never",
+    "amount": "None",
+    "prepare": "Do not feed",
+    "warning": "Toxic risk",
+    "url": "/rabbit-health"
+  },
+  {
+    "name": "Strawberries",
+    "aliases": [
+      "strawberry"
+    ],
+    "emoji": "🍓",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Strawberries can be offered as an occasional treat in small portions.",
+    "frequency": "Occasionally",
+    "amount": "Small piece",
+    "prepare": "Wash well",
+    "warning": "Sugary treat",
+    "url": "/can-rabbits-eat-strawberries"
+  },
+  {
+    "name": "Tomatoes",
+    "aliases": [
+      "tomato"
+    ],
+    "emoji": "🍅",
+    "category": "Vegetable",
+    "status": "caution",
+    "label": "With caution",
+    "summary": "Rabbits can eat a small amount of ripe tomato flesh, but leaves, stems and green parts are unsafe.",
+    "frequency": "Occasionally",
+    "amount": "Small piece of flesh",
+    "prepare": "Remove leaves, stems and green parts",
+    "warning": "Leaves and stems are toxic",
+    "url": "/can-rabbits-eat-tomatoes"
+  },
+  {
+    "name": "Watermelon",
+    "aliases": [
+      "watermelons"
+    ],
+    "emoji": "🍉",
+    "category": "Fruit",
+    "status": "treat",
+    "label": "Fruit treat",
+    "summary": "Watermelon flesh can be offered in small seedless pieces as an occasional treat.",
+    "frequency": "Occasionally",
+    "amount": "Small seedless piece",
+    "prepare": "Remove seeds and rind",
+    "warning": "Watery and sugary",
+    "url": "/can-rabbits-eat-watermelon"
+  }
+]

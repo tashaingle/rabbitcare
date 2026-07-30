@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RabbitCare.co.uk — Next.js (GitHub + Vercel)
 
-## Getting Started
+Content-first rebuild of [rabbitcare.co.uk](https://rabbitcare.co.uk) from a WordPress export.  
+**Shop / cart / checkout are not included yet** — care guides and tools only.
 
-First, run the development server:
+## What’s in this project
+
+| Path | Purpose |
+|------|---------|
+| `content/pages/*.json` | Pages extracted from the WordPress WXR export |
+| `content/foods.json` | Food-checker data (51 foods) |
+| `content/index.json` | Page index for navigation / SSG |
+| `scripts/extract-content.mjs` | Re-import from a fresh WordPress export |
+| `src/app` | Next.js App Router site |
+
+## Local development
 
 ```bash
+cd website
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm start       # run production server
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Re-import from WordPress
 
-## Learn More
+If you export WordPress again (Tools → Export → All content):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+node scripts/extract-content.mjs "C:\path\to\your-export.xml"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+By default it looks for `../rabbitcare.WordPress.2026-07-30.xml` next to the `website` folder.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy to GitHub + Vercel
 
-## Deploy on Vercel
+### 1. Push to GitHub
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Create a new empty repository on GitHub (e.g. `rabbitcare`).
+2. From this `website` folder:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git add .
+git commit -m "Initial RabbitCare Next.js site from WordPress export"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/rabbitcare.git
+git push -u origin main
+```
+
+> Tip: deploy the **`website`** folder as the repo root (recommended), or set Vercel’s **Root Directory** to `website` if the monorepo parent is the git root.
+
+### 2. Deploy on Vercel
+
+1. Go to [vercel.com](https://vercel.com) → **Add New Project**.
+2. Import your GitHub repo.
+3. Framework preset: **Next.js** (auto-detected).
+4. Click **Deploy**.
+
+### 3. Custom domain (rabbitcare.co.uk)
+
+1. In Vercel → Project → **Settings → Domains** → add `rabbitcare.co.uk` and `www.rabbitcare.co.uk`.
+2. At your domain registrar / DNS host, add the records Vercel shows (usually an `A` record and/or `CNAME`).
+3. When DNS propagates, switch traffic from WordPress hosting to Vercel.
+4. Keep the old WordPress site online temporarily so **images** still load from  
+   `https://rabbitcare.co.uk/wp-content/...`  
+   until you copy media into this project (or a CDN).
+
+## Images note
+
+Article images currently load from the **live WordPress uploads URL**. That works while the old host is up. For a permanent cutover:
+
+1. Download `/wp-content/uploads/` from your host, or
+2. Use a plugin/export of media, then put files under `public/uploads/` and re-run a URL rewrite.
+
+## Shop later
+
+WooCommerce does not run on Vercel. When you want the shop back, common options:
+
+- **Shopify** storefront + product links
+- **Stripe** checkout with a small product catalogue
+- **Snipcart** / similar
+
+## Tech
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
