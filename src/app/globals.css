@@ -76,8 +76,7 @@ img {
 
 /* Pages/tools without a full-bleed WP hero need top padding under absolute header */
 .directory,
-.food-checker,
-.home-index-strip {
+.food-checker {
   padding-top: calc(var(--header-h) + 12px);
 }
 
@@ -556,33 +555,6 @@ img {
   height: auto;
 }
 
-/* Thin strip under the WordPress homepage design */
-.home-index-strip {
-  padding: 28px 14px 40px;
-  background: linear-gradient(180deg, transparent, rgba(47, 74, 46, 0.06));
-}
-
-.home-index-strip-inner {
-  width: min(900px, 100%);
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 22px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(78, 107, 69, 0.14);
-  box-shadow: 0 12px 32px rgba(64, 43, 28, 0.08);
-}
-
-.home-index-strip-inner p {
-  margin: 0;
-  color: var(--rc-muted);
-  font-weight: 700;
-  max-width: 34rem;
-}
 
 /* ——— Full page directory ——— */
 
