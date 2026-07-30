@@ -676,12 +676,10 @@ img {
 
 /* ——— Migrated WP content tweaks ——— */
 
-.wp-migrated-content {
-  /* Let embedded page styles own layout; reduce WP full-bleed hacks for our shell */
-}
-
 .wp-migrated-content .rcb-page,
+.wp-migrated-content .rca-page,
 .wp-migrated-content .rc-page,
+.wp-migrated-content [class*="-page"].alignfull,
 .wp-migrated-content [class*="alignfull"] {
   left: auto !important;
   width: 100% !important;
@@ -692,15 +690,36 @@ img {
 }
 
 /* Soften negative top margins designed for WP headers */
-.wp-migrated-content .rcb-page {
+.wp-migrated-content [class*="-page"] {
   margin-top: 0 !important;
 }
 
-/* Hide dead shop product CTAs lightly — content remains, links may 404 until shop returns */
+/*
+  WordPress pages used scroll-driven reveal animations (opacity: 0 +
+  animation-timeline: view()). Those stay invisible in many browsers /
+  without scroll support. Force content visible on the migrated site.
+*/
+.wp-migrated-content [class*="reveal"],
+.wp-migrated-content .rcb-reveal,
+.wp-migrated-content .rca-reveal,
+.wp-migrated-content .rc-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  animation-timeline: auto !important;
+}
+
+/* Ensure media from the old host displays at a sensible size */
+.wp-migrated-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Shop links may 404 until commerce is rebuilt — keep readable, not invisible */
 .wp-migrated-content a[href*="/product/"],
 .wp-migrated-content a[href*="/product-category/"],
 .wp-migrated-content a[href*="/shop"] {
-  opacity: 0.55;
+  opacity: 0.85;
 }
 
 @media (max-width: 900px) {

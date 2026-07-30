@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 
 /**
  * Renders HTML exported from WordPress Custom HTML blocks.
- * Re-injects <script> tags after mount so interactive tools still work.
- * Content is from your own WordPress export (trusted site content).
+ * HTML is server-rendered via dangerouslySetInnerHTML so content is visible
+ * immediately (and without waiting for hydration). Scripts are re-executed
+ * after mount so interactive tools still work.
  */
 export function WpContent({ html }: { html: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -14,22 +15,26 @@ export function WpContent({ html }: { html: string }) {
     const root = ref.current;
     if (!root) return;
 
-    root.innerHTML = html;
-
+    // Re-execute scripts (browsers skip scripts inserted via innerHTML/SSR)
     const scripts = Array.from(root.querySelectorAll("script"));
     for (const old of scripts) {
+      if (old.dataset.rcExecuted === "1") continue;
       const script = document.createElement("script");
       for (const attr of old.attributes) {
         script.setAttribute(attr.name, attr.value);
       }
       if (old.textContent) script.textContent = old.textContent;
+      script.dataset.rcExecuted = "1";
       old.replaceWith(script);
     }
-
-    return () => {
-      root.innerHTML = "";
-    };
   }, [html]);
 
-  return <div className="wp-migrated-content" ref={ref} />;
+  return (
+    <div
+      ref={ref}
+      className="wp-migrated-content"
+      // Trusted content from your own WordPress export
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
