@@ -37,6 +37,11 @@ export function Footer() {
             <h2>Guides</h2>
             <ul>
               <li>
+                <Link href="/guides">
+                  <strong>All pages index</strong>
+                </Link>
+              </li>
+              <li>
                 <Link href="/best-hay-for-rabbits">Best hay</Link>
               </li>
               <li>
@@ -49,7 +54,10 @@ export function Footer() {
                 <Link href="/rabbit-health">Rabbit health</Link>
               </li>
               <li>
-                <Link href="/learn-more">All guides</Link>
+                <Link href="/rabbit-behaviour">Rabbit behaviour</Link>
+              </li>
+              <li>
+                <Link href="/rabbit-toys">Rabbit toys</Link>
               </li>
             </ul>
           </div>

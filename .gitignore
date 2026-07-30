@@ -39,3 +39,6 @@ next-env.d.ts
 
 # local WordPress export (keep out of repo if huge — optional)
 # ../rabbitcare.WordPress*.xml
+
+.vercel
+.env*

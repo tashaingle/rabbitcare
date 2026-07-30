@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPagesByCategory } from "@/lib/content";
+import { getAllPages, getPagesByCategory } from "@/lib/content";
 
 const tools = [
   {
@@ -26,23 +26,14 @@ const tools = [
     title: "Owner checklist",
     blurb: "A calm first-time rabbit owner guide.",
   },
-  {
-    href: "/best-bedding-for-rabbits",
-    icon: "🧺",
-    title: "Best bedding",
-    blurb: "Safe, absorbent options for a clean setup.",
-  },
-  {
-    href: "/best-hay-for-rabbits",
-    icon: "🌾",
-    title: "Best hay",
-    blurb: "Why hay is the main food — and how to choose it.",
-  },
 ];
 
 export default function HomePage() {
   const guides = getPagesByCategory("guide");
-  const foodGuides = getPagesByCategory("food").slice(0, 9);
+  const foodGuides = getPagesByCategory("food");
+  // Home + all content pages (learn-more redirects to /guides)
+  const totalContent = getAllPages().filter((p) => p.slug !== "learn-more")
+    .length;
 
   return (
     <>
@@ -56,11 +47,11 @@ export default function HomePage() {
             common health warning signs.
           </p>
           <div className="btn-row">
-            <Link className="btn btn-primary" href="/can-rabbits-eat-this">
-              Use the food checker
+            <Link className="btn btn-primary" href="/guides">
+              Browse all {totalContent} pages
             </Link>
-            <Link className="btn btn-secondary" href="/learn-more">
-              Browse all guides
+            <Link className="btn btn-secondary" href="/can-rabbits-eat-this">
+              Use the food checker
             </Link>
           </div>
         </div>
@@ -80,9 +71,7 @@ export default function HomePage() {
         <div className="section-head">
           <span className="pill">Care tools</span>
           <h2>Quick helpers for everyday rabbit care</h2>
-          <p>
-            Jump into the most useful tools and guides in one calm place.
-          </p>
+          <p>Interactive tools you can use right away.</p>
         </div>
         <div className="cards">
           {tools.map((tool) => (
@@ -132,9 +121,12 @@ export default function HomePage() {
 
       <section className="guide-grid">
         <div className="section-head">
-          <span className="pill">Featured reading</span>
-          <h2>Popular rabbit care guides</h2>
-          <p>Move straight into the most useful care articles.</p>
+          <span className="pill">Care guides</span>
+          <h2>Rabbit care guides</h2>
+          <p>
+            Housing, diet, health, behaviour, bedding, toys and first-time owner
+            advice — all {guides.length} guides below.
+          </p>
         </div>
         <div className="cards">
           {guides.map((guide) => (
@@ -147,26 +139,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="guide-grid" style={{ paddingBottom: 48 }}>
+      <section className="guide-grid" style={{ paddingBottom: 24 }}>
         <div className="section-head">
           <span className="pill">Safe foods</span>
-          <h2>Can rabbits eat…?</h2>
+          <h2>Can rabbits eat…? ({foodGuides.length} guides)</h2>
           <p>
-            Detailed guides for common fruits and vegetables — or use the full
-            food checker for a quick answer.
+            Every individual food guide on the site is listed here. For a quick
+            search, use the{" "}
+            <Link href="/can-rabbits-eat-this" className="inline-link">
+              food checker
+            </Link>
+            .
           </p>
         </div>
-        <div className="cards">
-          {foodGuides.map((page) => (
-            <Link key={page.slug} href={`/${page.slug}`} className="card">
-              <h3>{page.title}</h3>
-              <span className="card-link">Read →</span>
-            </Link>
-          ))}
+        <div className="food-link-grid">
+          {foodGuides
+            .slice()
+            .sort((a, b) => a.title.localeCompare(b.title))
+            .map((page) => (
+              <Link
+                key={page.slug}
+                href={`/${page.slug}`}
+                className="food-link-card"
+              >
+                {page.title}
+              </Link>
+            ))}
         </div>
         <div className="btn-row" style={{ marginTop: 20 }}>
           <Link className="btn btn-primary" href="/can-rabbits-eat-this">
             Open full food checker
+          </Link>
+          <Link className="btn btn-secondary" href="/guides">
+            View complete site index
+          </Link>
+        </div>
+      </section>
+
+      <section className="guide-grid" style={{ paddingBottom: 48 }}>
+        <div className="all-pages-cta">
+          <span className="pill">Full library</span>
+          <h2>Looking for a specific page?</h2>
+          <p>
+            Open the complete index of all {totalContent} care pages, tools and
+            guides.
+          </p>
+          <Link className="btn btn-primary" href="/guides">
+            Browse all pages →
           </Link>
         </div>
       </section>
