@@ -1,0 +1,2821 @@
+<div class="wp-block-group alignfull">
+<!--
+RabbitCare.co.uk homepage content section
+Changes in this version:
+- Added RabbitCare shop links throughout the homepage
+- Added a full shop feature section with category cards linking to WooCommerce categories
+- Added a Shop quickbar card linking to /shop/
+- Updated relevant care cards and CTAs to point naturally to shop categories where useful
+- Kept the existing RabbitCare homepage styling, mobile fixes and footer spacing fixes
+
+How to use in WordPress:
+1) Edit the Home page.
+2) Add a "Custom HTML" block.
+3) Replace the old homepage block with everything below.
+
+Notes:
+- No custom header/nav or footer included.
+- Google verification and structured data should still go in WPCode/Header, not here.
+- Internal links use root-relative URLs such as /rabbit-health/ to avoid http/https issues.
+-->
+
+<section class="rc-page alignfull" id="rabbitcare-home">
+  <style>
+    :root {
+      --rc-cream: #fff9ef;
+      --rc-cream-2: #f6ead8;
+      --rc-sage: #7f9b72;
+      --rc-sage-dark: #4e6b45;
+      --rc-moss: #2f4a2e;
+      --rc-brown: #8a6246;
+      --rc-gold: #d7a64b;
+      --rc-charcoal: #2d2d2b;
+      --rc-muted: #6f6a61;
+      --rc-white: #ffffff;
+      --rc-danger: #9b3b2f;
+      --rc-danger-soft: #fff0eb;
+      --rc-shadow: 0 24px 70px rgba(64, 43, 28, 0.16);
+      --rc-radius-xl: 34px;
+      --rc-radius-lg: 24px;
+      --rc-radius-md: 16px;
+      --rc-max: 1320px;
+      --rc-font-heading: Georgia, "Times New Roman", serif;
+      --rc-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .rc-page,
+    .rc-page * {
+      box-sizing: border-box;
+    }
+
+    html body.home,
+    body.home,
+    .home .wp-site-blocks,
+    .home .entry-content,
+    .home .wp-block-post-content,
+    .home main {
+      background: #fef4f0 !important;
+    }
+
+/* ── Searchable food finder ── */
+.rc-food-finder {
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(127,155,114,0.08), rgba(255,255,255,0));
+}
+
+.rc-food-finder-card {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 24px;
+  align-items: stretch;
+  padding: clamp(24px, 5vw, 46px);
+  border-radius: 46px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(215, 166, 75, 0.16), transparent 20rem),
+    rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(78, 107, 69, 0.14);
+  box-shadow: var(--rc-shadow);
+}
+
+.rc-food-finder-copy h2 {
+  margin: 14px 0 14px;
+  font-family: var(--rc-font-heading);
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  color: var(--rc-charcoal);
+}
+
+.rc-food-finder-copy p {
+  max-width: 560px;
+  margin: 0 0 24px;
+  color: var(--rc-muted);
+  font-size: 1.07rem;
+}
+
+.rc-food-search-wrap {
+  position: relative;
+  max-width: 560px;
+}
+
+.rc-food-search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.15rem;
+  pointer-events: none;
+}
+
+.rc-food-search {
+  width: 100%;
+  min-height: 62px;
+  padding: 16px 18px 16px 52px;
+  border-radius: 999px;
+  border: 2px solid rgba(78, 107, 69, 0.18);
+  background: #ffffff;
+  color: var(--rc-charcoal);
+  font: inherit;
+  font-weight: 700;
+  box-shadow: 0 14px 34px rgba(64, 43, 28, 0.08);
+}
+
+.rc-food-search:focus {
+  outline: none;
+  border-color: rgba(78, 107, 69, 0.55);
+  box-shadow: 0 18px 44px rgba(64, 43, 28, 0.12);
+}
+
+.rc-food-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.rc-food-chips button {
+  padding: 9px 14px;
+  border: 1px solid rgba(78, 107, 69, 0.16);
+  border-radius: 999px;
+  background: #fff9ef;
+  color: var(--rc-moss);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.rc-food-chips button:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+.rc-food-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 20px;
+  color: var(--rc-muted);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.rc-food-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.rc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.rc-dot-safe {
+  background: var(--rc-sage);
+}
+
+.rc-dot-treat {
+  background: var(--rc-gold);
+}
+
+.rc-dot-caution {
+  background: var(--rc-danger);
+}
+
+.rc-food-results-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 430px;
+  padding: 22px;
+  border-radius: 34px;
+  background: linear-gradient(180deg, #ffffff, #fff8eb);
+  border: 1px solid rgba(78, 107, 69, 0.12);
+  box-shadow: 0 18px 48px rgba(64, 43, 28, 0.10);
+}
+
+.rc-food-results-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  color: var(--rc-moss);
+}
+
+.rc-food-results-header strong {
+  font-size: 1.05rem;
+}
+
+.rc-food-results-header span {
+  color: var(--rc-muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.rc-food-results {
+  display: grid;
+  gap: 12px;
+  flex: 1;
+}
+
+.rc-food-result {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(78, 107, 69, 0.10);
+  box-shadow: 0 10px 24px rgba(64, 43, 28, 0.06);
+}
+
+.rc-food-result-emoji {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(127, 155, 114, 0.12);
+  font-size: 2rem;
+}
+
+.rc-food-result h3 {
+  margin: 0 0 4px;
+  color: var(--rc-moss);
+  line-height: 1.15;
+}
+
+.rc-food-result p {
+  margin: 0;
+  color: var(--rc-muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.rc-food-result a {
+  display: inline-flex;
+  margin-top: 8px;
+  color: var(--rc-sage-dark);
+  font-weight: 900;
+}
+
+.rc-food-status {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 7px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.rc-food-status-safe {
+  background: rgba(127, 155, 114, 0.14);
+  color: var(--rc-sage-dark);
+}
+
+.rc-food-status-treat {
+  background: rgba(215, 166, 75, 0.17);
+  color: #7a5a1a;
+}
+
+.rc-food-status-caution {
+  background: rgba(155, 59, 47, 0.10);
+  color: var(--rc-danger);
+}
+
+.rc-food-empty {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: 280px;
+  padding: 28px;
+  text-align: center;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px dashed rgba(78, 107, 69, 0.22);
+}
+
+.rc-food-empty span {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.rc-food-empty h3 {
+  margin: 0 0 6px;
+  color: var(--rc-moss);
+}
+
+.rc-food-empty p {
+  margin: 0;
+  max-width: 330px;
+  color: var(--rc-muted);
+}
+
+@media (max-width: 980px) {
+  .rc-food-finder-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .rc-food-finder-card {
+    padding: 20px;
+    border-radius: 30px;
+  }
+
+  .rc-food-results-panel {
+    min-height: auto;
+    padding: 16px;
+    border-radius: 26px;
+  }
+
+  .rc-food-result {
+    grid-template-columns: 46px 1fr;
+    padding: 14px;
+  }
+
+  .rc-food-result-emoji {
+    width: 46px;
+    height: 46px;
+    font-size: 1.6rem;
+  }
+}
+
+    .rc-page {
+      position: relative;
+      left: calc(50% + 20px);
+      width: calc(100vw + 40px);
+      max-width: none;
+      margin: 0 !important;
+      padding-bottom: 0 !important;
+      transform: translateX(-50%);
+      color: var(--rc-charcoal);
+      font-family: var(--rc-font-body);
+      background:
+        radial-gradient(circle at top left, rgba(215, 166, 75, 0.18), transparent 32rem),
+        linear-gradient(180deg, var(--rc-cream) 0%, #fffdf8 46%, #fef4f0 100%);
+      overflow-x: hidden;
+      overflow-y: visible;
+      line-height: 1.65;
+    }
+
+    .rc-page main {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .home .entry-content,
+    .home .wp-block-post-content,
+    .home .wp-site-blocks,
+    .home main {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .rc-page + *,
+    .rc-page + .wp-block-template-part,
+    .rc-page + footer,
+    .home footer,
+    .home .wp-block-template-part:has(footer),
+    .home .wp-block-template-part,
+    .home .site-footer {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+
+    .home .wp-site-blocks,
+    .home .entry-content,
+    .home .wp-block-post-content {
+      gap: 0 !important;
+      row-gap: 0 !important;
+      margin-block-end: 0 !important;
+      padding-block-end: 0 !important;
+    }
+
+    .home .wp-site-blocks > * + *,
+    .home .entry-content > * + *,
+    .home .wp-block-post-content > * + * {
+      margin-block-start: 0 !important;
+    }
+
+    .home .wp-block-html,
+    .home .entry-content > .wp-block-html,
+    .home .wp-block-post-content > .wp-block-html {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .home .wp-block-template-part,
+    .home .wp-block-template-part footer,
+    .home footer,
+    .home .site-footer,
+    .home .wp-site-blocks > footer {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      border-top: 0 !important;
+    }
+
+    .home .wp-block-template-part:has(footer),
+    .home .wp-site-blocks > .wp-block-template-part:last-child {
+      margin-top: 0 !important;
+      position: relative;
+      z-index: 4;
+    }
+
+    #rabbitcare-home {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+      display: flow-root;
+    }
+
+    .rc-page > :last-child,
+    .rc-page main > :last-child {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .rc-page a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .rc-page a:focus-visible {
+      outline: 3px solid rgba(215, 166, 75, 0.9);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
+    .rc-wrap {
+      width: min(var(--rc-max), calc(100% - 34px));
+      margin: 0 auto;
+    }
+
+    .rc-visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .rc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--rc-sage-dark);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .rc-pill::before {
+      content: "✦";
+      color: var(--rc-gold);
+    }
+
+    .rc-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .rc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 900;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .rc-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .rc-btn-primary {
+      background: linear-gradient(135deg, var(--rc-sage-dark), var(--rc-sage));
+      color: #fff;
+      box-shadow: 0 18px 38px rgba(79, 112, 70, 0.26);
+    }
+
+    .rc-btn-primary:hover {
+      box-shadow: 0 24px 50px rgba(79, 112, 70, 0.34);
+    }
+
+    .rc-btn-secondary {
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--rc-moss);
+      border: 1px solid rgba(78, 107, 69, 0.16);
+      box-shadow: 0 12px 28px rgba(64, 43, 28, 0.10);
+    }
+
+    /* ── Hero ── */
+    .rc-hero-image-wrap {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      background: #fff9ef;
+      display: block;
+      overflow: hidden;
+    }
+
+    .rc-hero-image-wrap picture {
+      display: block;
+      width: 100%;
+    }
+
+    .rc-hero-image {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      object-position: center center;
+      border-radius: 0;
+      box-shadow: none;
+      background: #fff;
+      animation: rcFadeIn 0.9s ease both;
+    }
+
+    /* ── Intro ── */
+    .rc-intro {
+      padding: 34px 0 0;
+      text-align: center;
+    }
+
+    .rc-intro p {
+      max-width: 760px;
+      margin: 10px auto 0;
+      color: var(--rc-muted);
+      font-size: 1.08rem;
+    }
+
+    /* ── Quickbar ── */
+    .rc-quickbar {
+      position: relative;
+      z-index: 5;
+      margin-top: clamp(18px, 3vw, 34px);
+    }
+
+   .rc-quickbar-inner {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(160px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  border-radius: var(--rc-radius-xl);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(78, 107, 69, 0.12);
+  box-shadow: var(--rc-shadow);
+  backdrop-filter: blur(18px);
+}
+
+  .rc-quick {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 104px;
+  padding: 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #fff, #fff8eb);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+    .rc-quick:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 34px rgba(83, 61, 42, 0.14);
+    }
+
+    .rc-quick-icon {
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
+      display: grid !important;
+      place-items: center !important;
+      align-self: center;
+      justify-self: center;
+      border-radius: 0;
+      background: transparent;
+      line-height: 1 !important;
+      flex: 0 0 auto;
+      text-align: center;
+      overflow: visible;
+    }
+
+    .rc-quick-icon img {
+      width: 64px;
+      height: 64px;
+      display: block;
+      object-fit: contain;
+    }
+
+    .rc-quick strong {
+      display: block;
+      color: var(--rc-moss);
+      line-height: 1.15;
+      font-size: 1rem;
+    }
+
+    .rc-quick span {
+      display: block;
+      margin-top: 4px;
+      color: var(--rc-muted);
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+
+    /* ── Sections ── */
+    .rc-section {
+      width: 100%;
+      padding: 74px 0;
+      position: relative;
+    }
+
+    .rc-section-header {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      text-align: center;
+    }
+
+    .rc-section h2,
+    .rc-intro h2,
+    .rc-emergency h2 {
+      margin: 14px 0 12px;
+      font-family: var(--rc-font-heading);
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      color: var(--rc-charcoal);
+      text-wrap: balance;
+    }
+
+    .rc-section-header p {
+      margin: 0 auto;
+      color: var(--rc-muted);
+      font-size: 1.08rem;
+      max-width: 680px;
+    }
+
+    /* ── Care card grid ── */
+    .rc-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .rc-card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+  .rc-card {
+  position: relative;
+  min-height: 245px;
+  padding: 26px;
+  border-radius: var(--rc-radius-xl);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(78, 107, 69, 0.12);
+  box-shadow: 0 18px 48px rgba(64, 43, 28, 0.10);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  display: flex;
+  flex-direction: column;
+}
+
+    .rc-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 28px 62px rgba(64, 43, 28, 0.16);
+    }
+
+    .rc-card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(127, 155, 114, 0.12);
+    }
+
+    .rc-card-icon {
+  width: 82px;
+  height: 82px;
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.rc-card-icon img {
+  width: 82px;
+  height: 82px;
+  display: block;
+  object-fit: contain;
+}
+.rc-card-icon-large img {
+  width: 104px;
+  height: 104px;
+  max-width: none;
+  transform: translate(-11px, -11px);
+}
+
+    .rc-card h3 {
+      margin: 0 0 10px;
+      color: var(--rc-moss);
+      font-size: 1.35rem;
+      line-height: 1.15;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rc-card p {
+      margin: 0 0 18px;
+      color: var(--rc-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+   .rc-card-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rc-sage-dark);
+  font-weight: 900;
+  margin-top: auto;
+}
+
+    .rc-card-link::after {
+      content: "→";
+      transition: transform 0.2s ease;
+    }
+
+    .rc-card:hover .rc-card-link::after {
+      transform: translateX(4px);
+    }
+
+    /* ── Homepage shop feature ── */
+    .rc-shop-home {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(215, 166, 75, 0.08), rgba(255, 255, 255, 0));
+    }
+.rc-shop-wide {
+  width: min(1600px, calc(100% - 24px));
+}
+.rc-shop-subtitle {
+  margin: 8px 0 0;
+  color: var(--rc-sage-dark);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+
+    .rc-shop-panel::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background: radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.22), transparent 24rem);
+      animation: rcGlow 7s ease-in-out infinite alternate;
+    }
+
+    .rc-shop-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .rc-shop-panel .rc-pill {
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .rc-shop-panel h3 {
+      margin: 14px 0 12px;
+      font-family: var(--rc-font-heading);
+      font-size: clamp(2.3rem, 4.4vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.028em;
+      text-wrap: balance;
+    }
+
+    .rc-shop-panel p {
+      max-width: 570px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.05rem;
+    }
+.rc-shop-free-shipping {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 16px !important;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #ffffff !important;
+  font-weight: 900;
+  font-size: 0.95rem !important;
+}
+
+    .rc-shop-panel .rc-btn-secondary {
+      background: #ffffff;
+      color: var(--rc-moss);
+      border: 2px solid #ffffff;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+
+
+    .rc-shop-category:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 48px rgba(64, 43, 28, 0.14);
+    }
+
+    .rc-shop-category::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      right: -52px;
+      top: -52px;
+      border-radius: 50%;
+      background: rgba(127, 155, 114, 0.12);
+    }
+
+    .rc-shop-category-icon {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .rc-shop-category strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      color: var(--rc-moss);
+      font-size: 1rem;
+      line-height: 1.18;
+    }
+
+    .rc-shop-category span:last-child {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      margin-top: auto;
+      color: var(--rc-sage-dark);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+/* ── Shop category slider ── */
+
+
+.rc-shop-slider-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.rc-shop-slider-top h3 {
+  margin: 10px 0 6px;
+  font-family: var(--rc-font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--rc-charcoal);
+}
+
+.rc-shop-slider-top p {
+  margin: 0;
+  max-width: 520px;
+  color: var(--rc-muted);
+  font-size: 0.98rem;
+}
+
+.rc-shop-slider-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.rc-shop-slider-btn {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(78, 107, 69, 0.16);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--rc-moss);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(64, 43, 28, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rc-shop-slider-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(64, 43, 28, 0.12);
+}
+
+
+
+.rc-shop-slide:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 48px rgba(64, 43, 28, 0.14);
+}
+
+.rc-shop-slide::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  right: -54px;
+  top: -54px;
+  border-radius: 50%;
+  background: rgba(127, 155, 114, 0.12);
+}
+
+.rc-shop-slide-icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 12px;
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.rc-shop-slide strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--rc-moss);
+  font-size: 1.05rem;
+  line-height: 1.18;
+}
+
+.rc-shop-slide span:not(.rc-shop-slide-icon) {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--rc-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.rc-shop-slide em {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--rc-sage-dark);
+  font-style: normal;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+@media (max-width: 980px) {
+  .rc-shop-slider {
+    grid-auto-columns: minmax(220px, 58%);
+  }
+}
+
+@media (max-width: 640px) {
+  .rc-shop-slider-wrap {
+    padding: 16px;
+    border-radius: 26px;
+  }
+
+  .rc-shop-slider-top {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .rc-shop-slider-controls {
+    justify-content: flex-start;
+  }
+
+  .rc-shop-slider {
+    grid-auto-columns: minmax(230px, 82%);
+  }
+
+  .rc-shop-slide {
+    min-height: 175px;
+    border-radius: 22px;
+  }
+}
+
+    .rc-shop-safety-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .rc-shop-safety {
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid rgba(78, 107, 69, 0.12);
+      box-shadow: 0 12px 28px rgba(64, 43, 28, 0.07);
+      color: var(--rc-muted);
+      font-size: 0.95rem;
+    }
+
+    .rc-shop-safety strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--rc-moss);
+      font-size: 1rem;
+    }
+  /* ── Shop essentials product-style category strip ── */
+.rc-shop-home {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(215, 166, 75, 0.08), rgba(255, 255, 255, 0));
+}
+
+.rc-shop-strip-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.rc-shop-strip-head h2 {
+  margin: 10px 0 0;
+  font-family: var(--rc-font-heading);
+  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--rc-charcoal);
+}
+
+.rc-shop-view-all {
+  color: var(--rc-sage-dark);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.rc-shop-category-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(170px, 1fr));
+  gap: 16px;
+}
+
+.rc-shop-product-card {
+  min-height: 278px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(78, 107, 69, 0.12);
+  box-shadow: 0 12px 30px rgba(64, 43, 28, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rc-shop-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 48px rgba(64, 43, 28, 0.14);
+}
+
+.rc-shop-product-card img {
+  width: 100%;
+  height: 155px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 14px;
+  border-radius: 14px;
+  background: #fff8eb;
+}
+
+.rc-shop-product-card strong {
+  display: block;
+  color: var(--rc-moss);
+  font-size: 0.98rem;
+  line-height: 1.18;
+  margin-bottom: 5px;
+}
+
+.rc-shop-product-card span {
+  color: var(--rc-muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.rc-shop-product-card em {
+  display: block;
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--rc-sage-dark);
+  font-style: normal;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.rc-shop-confidence-card {
+  background: linear-gradient(180deg, #fff8eb, #f7ead8);
+}
+
+.rc-shop-box-icon {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 126px;
+  margin: 0 0 14px;
+  border-radius: 14px;
+  background: rgba(127, 155, 114, 0.10);
+  color: var(--rc-sage-dark);
+  font-size: 2.2rem !important;
+  line-height: 1;
+}
+
+.rc-shop-confidence-card strong {
+  font-family: var(--rc-font-heading);
+  font-size: 1.35rem;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--rc-charcoal);
+}
+.rc-shop-free-shipping-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 12px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(127, 155, 114, 0.14);
+  color: var(--rc-sage-dark) !important;
+  font-size: 0.82rem !important;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+    /* ── Emergency ── */
+    .rc-emergency {
+      padding: 68px 0;
+      background: linear-gradient(180deg, rgba(255, 240, 235, 0.48), rgba(255, 255, 255, 0));
+    }
+
+    .rc-emergency-card {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+      padding: clamp(24px, 5vw, 44px);
+      border-radius: 42px;
+      background: #ffffff;
+      border: 2px solid rgba(155, 59, 47, 0.16);
+      box-shadow: var(--rc-shadow);
+    }
+
+    .rc-emergency h2 {
+      color: var(--rc-danger);
+    }
+
+    .rc-emergency p {
+      margin: 0;
+      color: var(--rc-muted);
+      font-size: 1.06rem;
+    }
+
+    .rc-warning-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rc-warning-list li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--rc-danger-soft);
+      color: #4a2823;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    /* ── Split section ── */
+    .rc-split {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .rc-image-stack {
+      position: relative;
+      min-height: 520px;
+    }
+
+    .rc-image-stack img {
+      position: absolute;
+      object-fit: cover;
+      display: block;
+      border: 10px solid rgba(255, 255, 255, 0.82);
+      box-shadow: var(--rc-shadow);
+      transition: transform 0.35s ease;
+    }
+
+    .rc-image-stack img:hover {
+      transform: rotate(0deg) scale(1.03) !important;
+    }
+
+    .rc-img-main {
+      width: 78%;
+      height: 410px;
+      left: 0;
+      top: 30px;
+      border-radius: 42px;
+      transform: rotate(-2deg);
+    }
+
+    .rc-img-small {
+      width: 50%;
+      height: 260px;
+      right: 0;
+      bottom: 0;
+      border-radius: 34px;
+      transform: rotate(4deg);
+    }
+
+    .rc-checklist {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .rc-check {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 13px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(78, 107, 69, 0.12);
+      box-shadow: 0 12px 26px rgba(64, 43, 28, 0.07);
+    }
+
+    .rc-check b {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 0;
+      background: transparent;
+      color: var(--rc-sage-dark);
+    }
+
+    .rc-check strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--rc-moss);
+      font-size: 1.05rem;
+    }
+
+    .rc-check span {
+      color: var(--rc-muted);
+    }
+
+    /* ── Food section ── */
+    .rc-food {
+      width: 100%;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(127, 155, 114, 0.09), rgba(255, 255, 255, 0));
+    }
+
+    /* Shared food card grid — 4-col for veg, 5-col for fruit */
+    .rc-food-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rc-fruit-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .rc-food-card {
+      position: relative;
+      min-height: 260px;
+      padding: 24px;
+      border-radius: var(--rc-radius-xl);
+      background: #fff;
+      box-shadow: 0 16px 42px rgba(64, 43, 28, 0.10);
+      border: 1px solid rgba(78, 107, 69, 0.10);
+      overflow: hidden;
+      transition: transform 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .rc-food-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.78) 44%, rgba(255, 255, 255, 0.98) 72%);
+      pointer-events: none;
+    }
+
+    .rc-food-card:hover {
+      transform: translateY(-6px) rotate(-1deg);
+    }
+
+    .rc-food-card-emoji {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      z-index: 0;
+      transform: translateX(-50%);
+      font-size: 4.2rem;
+      line-height: 1;
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    .rc-fruit-card {
+      min-height: 220px;
+    }
+
+    .rc-fruit-card .rc-food-card-emoji {
+      font-size: 3.6rem;
+    }
+
+    .rc-food-card h3 {
+      position: relative;
+      z-index: 2;
+      margin: 0 0 8px;
+      color: var(--rc-moss);
+      font-size: 1.08rem;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.82);
+      line-height: 1.2;
+    }
+
+    .rc-food-card p {
+      position: relative;
+      z-index: 2;
+      margin: 0 0 15px;
+      color: #3f3a33;
+      font-size: 0.9rem;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .rc-safe {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(127, 155, 114, 0.14);
+      color: var(--rc-sage-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .rc-safe-caution {
+      background: rgba(215, 166, 75, 0.16);
+      color: #7a5a1a;
+    }
+
+    /* ── Food category divider band ── */
+    .rc-food-category {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 54px 0 28px;
+    }
+
+    .rc-food-category-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .rc-food-category-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .rc-food-category-icon-veg {
+      background: rgba(127, 155, 114, 0.15);
+    }
+
+    .rc-food-category-icon-fruit {
+      background: rgba(215, 166, 75, 0.15);
+    }
+
+    .rc-food-category-text strong {
+      display: block;
+      font-family: var(--rc-font-heading);
+      font-size: 1.55rem;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--rc-charcoal);
+    }
+
+    .rc-food-category-text span {
+      display: block;
+      margin-top: 3px;
+      color: var(--rc-muted);
+      font-size: 0.88rem;
+    }
+
+    .rc-food-category-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(78, 107, 69, 0.22), transparent);
+    }
+
+    /* ── Articles ── */
+    .rc-articles {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+    }
+
+    .rc-feature-post {
+      min-height: 470px;
+      padding: 30px;
+      border-radius: 42px;
+      background:
+        linear-gradient(180deg, rgba(39, 54, 34, 0.18), rgba(39, 54, 34, 0.72)),
+        url("/wp-content/uploads/2026/05/Rabbitcare-cage-2.png");
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: var(--rc-shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .rc-feature-post::before {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.24), transparent 22rem);
+      animation: rcGlow 7s ease-in-out infinite alternate;
+    }
+
+    .rc-feature-post > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .rc-feature-post .rc-pill {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .rc-feature-post h3 {
+      max-width: 560px;
+      margin: 14px 0 12px;
+      font-family: var(--rc-font-heading);
+      font-size: clamp(2.1rem, 4vw, 3.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .rc-feature-post p {
+      max-width: 570px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1.05rem;
+    }
+
+   .rc-feature-post .rc-btns {
+  margin-top: auto;
+}
+
+.rc-feature-post .rc-btn {
+  align-self: flex-start;
+}
+
+    .rc-feature-post .rc-btn-secondary {
+      background: #ffffff;
+      color: #2f4a2e;
+      border: 2px solid #ffffff;
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .rc-feature-post .rc-btn-secondary:hover {
+      background: #fff4d8;
+      color: #243320;
+      border-color: #fff4d8;
+    }
+
+    .rc-post-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .rc-post {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 15px;
+      padding: 14px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(78, 107, 69, 0.10);
+      box-shadow: 0 12px 32px rgba(64, 43, 28, 0.08);
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+
+    .rc-post:hover {
+      transform: translateX(6px);
+      background: #fff;
+    }
+
+    .rc-post img {
+      width: 92px;
+      height: 92px;
+      max-width: 92px;
+      max-height: 92px;
+      border-radius: 20px;
+      object-fit: cover;
+      background: #f1eadf;
+    }
+
+    .rc-post h3 {
+      margin: 4px 0 6px;
+      color: var(--rc-moss);
+      line-height: 1.15;
+      font-size: 1.05rem;
+    }
+
+    .rc-post p {
+      margin: 0;
+      color: var(--rc-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    /* ── Community ── */
+    .rc-community {
+      width: 100%;
+      position: relative;
+      padding: 86px 0;
+    }
+
+    .rc-community-card {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      padding: clamp(28px, 5vw, 58px);
+      border-radius: 52px;
+      background:
+        linear-gradient(135deg, rgba(28, 48, 27, 0.92), rgba(58, 84, 49, 0.86)),
+        url("/wp-content/uploads/2026/03/625003832_122099166537243843_5994958175719718663_n.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--rc-charcoal);
+      box-shadow: var(--rc-shadow);
+      overflow: hidden;
+      min-height: auto;
+    }
+
+    .rc-community-card > div:first-child {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .rc-community-card .rc-pill {
+      color: #ffffff;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      opacity: 1;
+    }
+
+    .rc-community h2 {
+      color: #ffffff;
+      margin: 10px 0 16px;
+      opacity: 1;
+      text-shadow: 0 3px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .rc-community p {
+      max-width: 640px;
+      color: #ffffff;
+      font-size: 1.08rem;
+      opacity: 1;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .rc-community-img {
+      position: relative;
+    }
+
+    .rc-community-img img {
+      width: 100%;
+      height: 320px;
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: 36px;
+      display: block;
+      box-shadow: 0 22px 52px rgba(20, 30, 20, 0.34);
+      animation: rcFloat 6.5s ease-in-out infinite;
+    }
+
+    /* ── Newsletter ── */
+    .rc-newsletter {
+      width: 100%;
+      position: relative;
+      padding: 68px 0 70px !important;
+      margin: 0 !important;
+      background: #fef4f0;
+      z-index: 2;
+    }
+
+    .rc-newsletter-box {
+      position: relative;
+      z-index: 3;
+      margin-bottom: 0 !important;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      padding: 34px;
+      border-radius: 38px;
+      background: #ffffff;
+      border: 2px solid rgba(78, 107, 69, 0.22);
+      box-shadow: 0 24px 70px rgba(64, 43, 28, 0.18);
+      color: #243320;
+    }
+
+    .rc-newsletter-box * {
+      opacity: 1;
+    }
+
+    .rc-newsletter-box .rc-btn-primary {
+      color: #ffffff;
+      background: #2f4a2e;
+      border: 2px solid #2f4a2e;
+      box-shadow: 0 14px 28px rgba(47, 74, 46, 0.28);
+    }
+
+    .rc-newsletter h2 {
+      margin: 0 0 10px;
+      font-family: var(--rc-font-heading);
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      color: #243320;
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .rc-newsletter p {
+      margin: 0;
+      color: #332d26;
+      font-weight: 500;
+      font-size: 1.08rem;
+      line-height: 1.55;
+      opacity: 1;
+    }
+
+    /* ── Disclaimer ── */
+    .rc-disclaimer {
+      padding: 0 0 42px;
+      background: #fef4f0;
+    }
+
+    .rc-disclaimer p {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--rc-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      border: 1px solid rgba(78, 107, 69, 0.12);
+    }
+
+    /* ── Animations ── */
+    .rc-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: rcFadeUp 0.9s ease forwards;
+      animation-timeline: view();
+      animation-range: entry 12% cover 30%;
+    }
+
+    @keyframes rcFadeIn {
+      from { opacity: 0; transform: scale(0.985); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes rcFadeUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes rcFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes rcGlow {
+      from { transform: translateX(-20px); opacity: 0.58; }
+      to { transform: translateX(20px); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rc-page *,
+      .rc-page *::before,
+      .rc-page *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+
+      .rc-reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ── Tablet ── */
+    @media (max-width: 1100px) {
+      .rc-quickbar-inner {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .rc-fruit-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .rc-shop-category-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 980px) {
+      .rc-page {
+        left: 50%;
+        width: 100vw;
+        transform: translateX(-50%);
+      }
+
+      .rc-wrap {
+        width: min(100% - 28px, var(--rc-max));
+      }
+
+      .rc-split,
+      .rc-articles,
+      .rc-shop-feature,
+      .rc-community-card,
+      .rc-newsletter-box,
+      .rc-emergency-card {
+        grid-template-columns: 1fr;
+      }
+
+      .rc-quickbar-inner {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .rc-food-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rc-fruit-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .rc-card-grid,
+      .rc-card-grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rc-image-stack {
+        min-height: 430px;
+      }
+
+      .rc-img-main {
+        height: 340px;
+      }
+
+      .rc-img-small {
+        height: 220px;
+      }
+
+      .rc-community-img img {
+        height: 300px;
+        max-height: 300px;
+      }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .rc-page {
+        left: 50%;
+        width: 100vw;
+        max-width: 100vw;
+        transform: translateX(-50%);
+        overflow-x: hidden;
+      }
+
+      .rc-wrap {
+        width: calc(100% - 24px);
+      }
+
+      .home .wp-site-blocks > header,
+.home .wp-site-blocks > .wp-block-template-part:first-child {
+  position: relative;
+  z-index: 50;
+  margin-bottom: -140px !important;
+}
+
+.rc-hero-image-wrap {
+  margin-top: 0 !important;
+  padding: 0;
+}
+
+.home header,
+.home .wp-block-template-part:has(header) {
+  position: relative;
+  z-index: 50;
+}
+
+      .rc-hero-image {
+        width: 100%;
+ display: block;
+        max-width: none;
+        height: auto;
+      }
+
+      .rc-intro {
+        padding-top: 26px;
+      }
+
+      .rc-quickbar {
+        margin-top: 18px;
+      }
+
+      .rc-quickbar-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 24px;
+      }
+
+      .rc-quickbar-inner .rc-quick:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+      }
+
+     .rc-quick {
+  grid-template-columns: 42px minmax(0, 1fr);
+  min-height: 78px;
+  padding: 12px;
+  gap: 8px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+   .rc-quick-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  max-width: 42px;
+  font-size: 1.7rem !important;
+  overflow: hidden;
+}
+
+.rc-quick-icon img {
+  width: 42px;
+  height: 42px;
+  max-width: 42px;
+  max-height: 42px;
+  object-fit: contain;
+}
+
+   .rc-quick strong {
+  font-size: 0.88rem;
+  line-height: 1.1;
+}
+
+.rc-quick span {
+  min-width: 0;
+  font-size: 0.78rem;
+  line-height: 1.22;
+}
+
+      .rc-section,
+      .rc-emergency {
+        padding: 46px 0;
+      }
+
+      .rc-section-header {
+        margin-bottom: 22px;
+      }
+
+      .rc-section h2,
+      .rc-intro h2,
+      .rc-emergency h2 {
+        font-size: clamp(2rem, 11vw, 3rem);
+        line-height: 1.02;
+        letter-spacing: -0.045em;
+      }
+
+      .rc-pill {
+        font-size: 0.75rem;
+        padding: 7px 10px;
+      }
+
+      .rc-card-grid,
+      .rc-card-grid-4,
+      .rc-shop-category-grid,
+      .rc-shop-safety-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .rc-card {
+        min-height: auto;
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .rc-shop-strip-head {
+        display: grid;
+        gap: 10px;
+        align-items: start;
+      }
+
+      .rc-shop-category-strip {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(210px, 78%);
+        grid-template-columns: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding-bottom: 12px;
+      }
+
+       .rc-shop-product-card {
+    scroll-snap-align: start;
+    min-height: 270px;
+  }
+
+      .rc-shop-product-card img,
+      .rc-shop-box-icon {
+        height: 145px;
+      }
+
+     .rc-card-icon {
+  width: 68px;
+  height: 68px;
+}
+
+.rc-card-icon img {
+  width: 68px;
+  height: 68px;
+}
+.rc-card-icon-large img {
+  width: 84px;
+  height: 84px;
+  max-width: none;
+  transform: translate(-8px, -8px);
+}
+
+      .rc-warning-list {
+        grid-template-columns: 1fr;
+      }
+
+      .rc-emergency-card {
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .rc-split {
+        gap: 20px;
+      }
+
+      .rc-image-stack {
+        min-height: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .rc-img-main,
+      .rc-img-small,
+      .rc-image-stack img {
+        position: static;
+        width: 100%;
+        height: 230px;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        transform: none !important;
+        border-radius: 24px;
+        border-width: 6px;
+      }
+
+      .rc-check {
+        grid-template-columns: 30px 1fr;
+        padding: 14px;
+        gap: 10px;
+      }
+
+      .rc-check b {
+        width: 30px;
+        height: 30px;
+      }
+
+      .rc-food-grid,
+      .rc-fruit-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .rc-food-card {
+        min-height: 200px;
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .rc-food-card-emoji {
+        font-size: 3rem;
+      }
+
+      .rc-fruit-card {
+        min-height: 180px;
+      }
+
+      .rc-fruit-card .rc-food-card-emoji {
+        font-size: 2.8rem;
+      }
+
+      .rc-food-category {
+        margin: 38px 0 20px;
+      }
+
+      .rc-food-category-text strong {
+        font-size: 1.25rem;
+      }
+
+      .rc-articles {
+        gap: 14px;
+      }
+
+     /* ── BUTTON FIX: feature post buttons must NOT go full-width on mobile ── */
+.rc-feature-post .rc-btns {
+  flex-wrap: wrap;
+}
+
+.rc-feature-post .rc-btn {
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+
+      .rc-feature-post {
+        min-height: 360px;
+        padding: 22px;
+        border-radius: 28px;
+      }
+
+      .rc-feature-post h3 {
+        font-size: clamp(2rem, 10vw, 2.7rem);
+      }
+
+      .rc-post {
+        grid-template-columns: 74px 1fr;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 18px;
+      }
+
+      .rc-post img {
+        width: 74px;
+        height: 74px;
+        max-width: 74px;
+        max-height: 74px;
+        border-radius: 16px;
+      }
+
+      .rc-post h3 {
+        margin-top: 0;
+        font-size: 1rem;
+      }
+
+      .rc-post p {
+        font-size: 0.86rem;
+      }
+
+      .rc-community {
+        padding: 46px 0;
+      }
+
+      .rc-community-card {
+        padding: 22px;
+        gap: 18px;
+        border-radius: 30px;
+      }
+
+      .rc-community h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .rc-community-img img {
+        height: 230px;
+        max-height: 230px;
+        border-radius: 24px;
+        animation: none;
+      }
+
+      .rc-newsletter {
+        padding: 46px 0 44px !important;
+      }
+
+      .rc-newsletter-box {
+        grid-template-columns: 1fr;
+        padding: 22px;
+        border-radius: 26px;
+        gap: 16px;
+      }
+
+      .rc-newsletter h2 {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      /* Newsletter button full-width on mobile (intentional) */
+      .rc-newsletter .rc-btn {
+        width: 100%;
+      }
+
+      .rc-btns {
+        gap: 10px;
+        flex-wrap: nowrap;
+      }
+
+      .rc-btn {
+        width: auto;
+        flex: 1 1 0;
+        min-height: 48px;
+        padding: 12px 14px;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .rc-owner-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .rc-owner-buttons .rc-btn {
+        width: 100%;
+        min-width: 0;
+        padding: 12px 8px;
+        font-size: 0.82rem;
+        line-height: 1.2;
+        white-space: normal;
+      }
+    }
+  </style>
+
+  <!-- ═══ HERO IMAGE ═══ -->
+  <div class="rc-hero-image-wrap" aria-label="RabbitCare cover image">
+    <picture>
+      <source
+        media="(max-width: 640px)"
+        srcset="/wp-content/uploads/2026/05/Cover-photo-mobile.png">
+      <img class="rc-hero-image"
+        src="/wp-content/uploads/2026/05/Cover-photo-with-text-right-size-2.png"
+        alt="RabbitCare.co.uk practical rabbit care advice for UK rabbit owners"
+        loading="eager" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
+
+  <!-- ═══ INTRO ═══ -->
+  <div class="rc-wrap rc-intro">
+    <h1 class="rc-visually-hidden">Rabbit Care UK - Practical Rabbit Care Advice for Owners</h1>
+    <span class="rc-pill">Rabbit care advice for UK owners</span>
+    <h2>Simple guides for happier, healthier rabbits</h2>
+    <p>Learn how to feed, house, groom and care for rabbits with beginner-friendly advice on hay, bedding, behaviour, toys, safe foods and common health warning signs.</p>
+  </div>
+
+  <!-- ═══ QUICKBAR ═══ -->
+  <section class="rc-quickbar" aria-label="Popular rabbit care topics">
+    <div class="rc-wrap rc-quickbar-inner">
+      <a class="rc-quick" href="/can-rabbits-eat-this">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Food-checker.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Food checker</strong><span>Can rabbits eat it?</span></span>
+      </a>
+      <a class="rc-quick" href="/rabbit-housing-size-calculator">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Housing-calculator.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Housing calculator</strong><span>Check your setup size</span></span>
+      </a>
+      <a class="rc-quick" href="/rabbit-symptom-checker">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Symptom-checker.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Symptom checker</strong><span>When to call a vet</span></span>
+      </a>
+      <a class="rc-quick" href="/best-bedding-for-rabbits">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Best-bedding.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Best bedding</strong><span>Comfy, clean setup</span></span>
+      </a>
+      <a class="rc-quick" href="/new-rabbit-owner-checklist">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Owner-Checklist.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Owner checklist</strong><span>First-time rabbit guide</span></span>
+      </a>
+      <a class="rc-quick" href="/shop">
+        <span class="rc-quick-icon"><img src="/wp-content/uploads/2026/05/Rabbitcare-Shop.png" alt="" loading="lazy" decoding="async"></span>
+        <span><strong>Rabbit Care shop</strong><span>Accessories and enrichment</span></span>
+      </a>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- ═══ CARE GUIDES ═══ -->
+    <section class="rc-section rc-reveal" id="care-guides">
+      <div class="rc-wrap">
+        <div class="rc-section-header">
+          <span class="rc-pill">Care made simple</span>
+          <h2>Everything your rabbits need to thrive</h2>
+          <p>Rabbit care can feel confusing at first, so this homepage brings the most useful guides together in one calm, easy place.</p>
+        </div>
+
+        <div class="rc-card-grid-4">
+          <article class="rc-card">
+           <div class="rc-card-icon">
+  <img src="/wp-content/uploads/2026/05/Fresh-food-and-safe-treats.png" alt="" loading="lazy" decoding="async">
+</div>
+<h3>Fresh food and safe treats</h3>
+            <p>Learn which fruits and vegetables are rabbit-safe, how often to offer them, and what should only be a tiny treat.</p>
+            <a class="rc-card-link" href="/can-rabbits-eat-this">Use the rabbit food checker</a>
+          </article>
+
+          <article class="rc-card">
+           <div class="rc-card-icon">
+  <img src="/wp-content/uploads/2026/05/Behaviour-and-bonding.png" alt="" loading="lazy" decoding="async">
+</div>
+<h3>Behaviour and bonding</h3>
+            <p>Understand zoomies, binkies, thumping, grooming, litter habits and the small signs that show how your rabbit is feeling.</p>
+            <a class="rc-card-link" href="/rabbit-behaviour">Explore rabbit behaviour</a>
+          </article>
+
+          <article class="rc-card">
+           <div class="rc-card-icon rc-card-icon-large">
+  <img src="/wp-content/uploads/2026/05/Choose-rabbit-bedding.png" alt="" loading="lazy" decoding="async">
+</div>
+<h3>Home setup and bedding</h3>
+<h3>Home setup and bedding</h3>
+            <p>Build a safe, roomy, clean environment with bedding, hides, hay racks and enrichment that suits real rabbit life.</p>
+            <a class="rc-card-link" href="/best-bedding-for-rabbits">Choose rabbit bedding</a>
+          </article>
+
+          <article class="rc-card">
+           <div class="rc-card-icon rc-card-icon-large">
+  <img src="/wp-content/uploads/2026/05/Shop-toys-and-enrichment.png" alt="" loading="lazy" decoding="async">
+</div>
+<h3>Toys and enrichment</h3>
+<h3>Toys and enrichment</h3>
+            <p>Keep curious minds busy with safe chew toys, tunnels, foraging activities and ideas that stop boredom before it starts.</p>
+            <a class="rc-card-link" href="/product-category/rabbit-toys-and-enrichment">Shop toys and enrichment</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SHOP RABBIT ESSENTIALS ═══ -->
+<section class="rc-section rc-shop-home rc-reveal" id="rabbitcare-shop-home">
+  <div class="rc-wrap rc-shop-wide">
+
+    <div class="rc-shop-strip-head">
+  <div>
+    <span class="rc-pill">RabbitCare shop</span>
+    <h2>Shop Rabbit Essentials</h2>
+    <p class="rc-shop-subtitle">Free shipping on all orders.</p>
+  </div>
+  <a class="rc-shop-view-all" href="/shop">View all products →</a>
+</div>
+
+    <div class="rc-shop-category-strip" aria-label="Shop rabbit care categories">
+
+      <a class="rc-shop-product-card" href="/product-category/rabbit-toys-and-enrichment">
+        <img src="/wp-content/uploads/2026/05/kf-S91fee711938541d1b244d5f4d3af6031K.webp" alt="Rabbit toys and enrichment">
+        <strong>Rabbit Toys & Enrichment</strong>
+        <span>Chew toys, tunnels and boredom-busting ideas</span>
+        <em>19 products</em>
+      </a>
+
+      <a class="rc-shop-product-card" href="/product-category/hay-bags-and-hay-feeders">
+        <img src="/wp-content/uploads/2026/05/kf-Sdf27d63c69ec42c59a4cb82bb20b0f682.webp" alt="Hay bags and hay feeders">
+        <strong>Hay Bags & Feeders</strong>
+        <span>Keep hay tidy, fresh and easy to reach</span>
+        <em>9 products</em>
+      </a>
+
+      <a class="rc-shop-product-card" href="/product-category/rabbit-grooming">
+        <img src="/wp-content/uploads/2026/05/kf-S6871fce3636f4bfd967e9486e29a5960u.webp" alt="Rabbit grooming">
+        <strong>Rabbit Grooming</strong>
+        <span>Brushes, combs and coat care essentials</span>
+        <em>7 products</em>
+      </a>
+
+      <a class="rc-shop-product-card" href="/product-category/bedding">
+        <img src="/wp-content/uploads/2026/05/18.avif" alt="Rabbit bedding">
+        <strong>Bedding</strong>
+        <span>Soft mats and supervised comfort items</span>
+        <em>5 products</em>
+      </a>
+
+      <a class="rc-shop-product-card" href="/product-category/feeding-accessories">
+        <img src="/wp-content/uploads/2026/05/kf-Sdb0caaa0a6664c12bff098b14c08066ay.webp" alt="Feeding accessories">
+        <strong>Feeding Accessories</strong>
+        <span>Useful helpers for cleaner daily feeding</span>
+        <em>5 products</em>
+      </a>
+
+      <a class="rc-shop-product-card rc-shop-confidence-card" href="/shop">
+        <span class="rc-shop-box-icon">📦</span>
+        <strong>Products, chosen with care.</strong>
+        <span>Browse useful accessories for real rabbit routines.</span>
+<span class="rc-shop-free-shipping-badge">Free shipping on all orders</span>
+        <em>Shop with confidence →</em>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+    <!-- ═══ EMERGENCY ═══ -->
+    <section class="rc-emergency rc-reveal" aria-label="Emergency rabbit health warning signs">
+      <div class="rc-wrap rc-emergency-card">
+        <div>
+          <span class="rc-pill">Know the warning signs</span>
+          <h2>When to call a rabbit-savvy vet urgently</h2>
+          <p>Rabbits can become seriously unwell quickly. If your rabbit suddenly changes behaviour, stops eating, stops pooing or seems in pain, contact a vet for urgent advice.</p>
+          <div class="rc-btns">
+  <a class="rc-btn rc-btn-primary" href="/rabbit-symptom-checker">Use the symptom checker</a>
+  <a class="rc-btn rc-btn-secondary" href="/rabbit-health">Read rabbit health guide</a>
+</div>
+        </div>
+        <ul class="rc-warning-list">
+          <li>Not eating</li>
+          <li>Not pooing</li>
+          <li>Bloated belly</li>
+          <li>Flystrike signs</li>
+          <li>Head tilt</li>
+          <li>Sudden weakness</li>
+          <li>Breathing problems</li>
+          <li>Severe diarrhoea</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ NEW RABBIT OWNER SPLIT ═══ -->
+    <section class="rc-section rc-reveal">
+      <div class="rc-wrap rc-split">
+        <div class="rc-image-stack" aria-label="Rabbit care image gallery">
+          <img class="rc-img-main"
+            src="/wp-content/uploads/2026/05/Rabbitcare-hay-2.png"
+            alt="Fluffy rabbit portrait for a rabbit care guide"
+            loading="lazy" decoding="async">
+          <img class="rc-img-small"
+            src="/wp-content/uploads/2026/05/Rabbitcare-learn-more-2.png"
+            alt="Rabbit resting in a calm home setup"
+            loading="lazy" decoding="async">
+        </div>
+
+        <div>
+          <span class="rc-pill">For new rabbit owners</span>
+          <h2>Start with the essentials, then build confidence</h2>
+          <p>Rabbits are gentle, clever animals with specific needs. A great daily routine starts with unlimited hay, safe housing, fresh water, suitable bedding, enrichment, calm handling and knowing when something is not quite right.</p>
+
+          <div class="rc-checklist">
+            <div class="rc-check">
+              <b>1</b>
+              <span><strong>Set up a roomy home</strong><span>Give rabbits space to hop, stretch, hide, explore and rest away from draughts or extreme heat.</span></span>
+            </div>
+            <div class="rc-check">
+              <b>2</b>
+              <span><strong>Make hay the main food</strong><span>Good-quality hay supports digestion, keeps teeth worn down and should be available every day.</span></span>
+            </div>
+            <div class="rc-check">
+              <b>3</b>
+              <span><strong>Provide toys and enrichment</strong><span>Safe chew toys, tunnels and foraging opportunities keep rabbits mentally stimulated and prevent boredom.</span></span>
+            </div>
+            <div class="rc-check">
+              <b>4</b>
+              <span><strong>Watch for small changes</strong><span>Changes in eating, poo, posture or energy can be important, so trust your instincts and seek vet advice when needed.</span></span>
+            </div>
+          </div>
+
+          <div class="rc-btns rc-owner-buttons">
+  <a class="rc-btn rc-btn-primary" href="/new-rabbit-owner-checklist">Build owner checklist</a>
+  <a class="rc-btn rc-btn-secondary" href="/shop">Shop rabbit essentials</a>
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SAFE FOODS ═══ -->
+    <section class="rc-section rc-food rc-food-finder rc-reveal" id="safe-foods">
+  <div class="rc-wrap">
+    <div class="rc-food-finder-card">
+      <div class="rc-food-finder-copy">
+        <span class="rc-pill">Safe food checker</span>
+        <h2>Can rabbits eat it?</h2>
+        <p>Search common fruits, vegetables, herbs and treats to quickly see whether they are safe, best as an occasional treat, or need extra caution.</p>
+
+        <div class="rc-food-search-wrap">
+          <span class="rc-food-search-icon">🔍</span>
+          <input
+            id="rcFoodSearch"
+            class="rc-food-search"
+            type="search"
+            placeholder="Search apple, carrot, celery, banana..."
+            autocomplete="off">
+        </div>
+
+        <div class="rc-food-chips" aria-label="Popular rabbit food searches">
+          <button type="button" data-food-chip="carrot">Carrot</button>
+          <button type="button" data-food-chip="apple">Apple</button>
+          <button type="button" data-food-chip="celery">Celery</button>
+          <button type="button" data-food-chip="banana">Banana</button>
+          <button type="button" data-food-chip="tomato">Tomato</button>
+          <button type="button" data-food-chip="cucumber">Cucumber</button>
+        </div>
+
+        <div class="rc-food-legend">
+          <span><b class="rc-dot rc-dot-safe"></b> Safe guide</span>
+          <span><b class="rc-dot rc-dot-treat"></b> Treat only</span>
+          <span><b class="rc-dot rc-dot-caution"></b> With caution</span>
+        </div>
+      </div>
+
+      <div class="rc-food-results-panel">
+        <div class="rc-food-results-header">
+          <strong>Quick result</strong>
+          <span id="rcFoodResultCount">Try a search</span>
+        </div>
+
+        <div id="rcFoodResults" class="rc-food-results">
+          <div class="rc-food-empty">
+            <span>🥬</span>
+            <h3>Start typing a food</h3>
+            <p>Search by name, or choose one of the popular foods to see a quick result.</p>
+          </div>
+        </div>
+
+        <div class="rc-btns">
+          <a class="rc-btn rc-btn-primary" href="/can-rabbits-eat-this">Full food checker</a>
+          <a class="rc-btn rc-btn-secondary" href="/what-do-rabbits-eat">Read diet guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    const foods = [
+      {
+        name: "Carrot",
+        keywords: "carrots carrot",
+        emoji: "🥕",
+        status: "Treat only",
+        statusClass: "rc-food-status-treat",
+        description: "Popular but sugary, so carrots are best offered in small amounts as an occasional treat.",
+        url: "/can-rabbits-eat-carrots/"
+      },
+      {
+        name: "Celery",
+        keywords: "celery",
+        emoji: "🥬",
+        status: "Safe guide",
+        statusClass: "rc-food-status-safe",
+        description: "Crunchy and hydrating. Serve in short pieces and introduce slowly.",
+        url: "/can-rabbits-eat-celery/"
+      },
+      {
+        name: "Cucumber",
+        keywords: "cucumber cucumbers",
+        emoji: "🥒",
+        status: "Safe guide",
+        statusClass: "rc-food-status-safe",
+        description: "Watery and refreshing, but not a replacement for hay and leafy greens.",
+        url: "/can-rabbits-eat-cucumber/"
+      },
+      {
+        name: "Lettuce",
+        keywords: "lettuce romaine little gem",
+        emoji: "🥗",
+        status: "Leafy greens",
+        statusClass: "rc-food-status-safe",
+        description: "Some varieties are better than others, so check the full guide before feeding.",
+        url: "/can-rabbits-eat-lettuce/"
+      },
+      {
+        name: "Peppers",
+        keywords: "pepper peppers bell pepper bell peppers",
+        emoji: "🫑",
+        status: "Safe guide",
+        statusClass: "rc-food-status-safe",
+        description: "Bell peppers are a colourful, vitamin-rich addition in small portions.",
+        url: "/can-rabbits-eat-peppers/"
+      },
+      {
+        name: "Tomatoes",
+        keywords: "tomato tomatoes",
+        emoji: "🍅",
+        status: "With caution",
+        statusClass: "rc-food-status-caution",
+        description: "The fruit flesh is okay in moderation, but leaves and stems are toxic.",
+        url: "/can-rabbits-eat-tomatoes/"
+      },
+      {
+        name: "Apple",
+        keywords: "apple apples",
+        emoji: "🍎",
+        status: "Fruit guide",
+        statusClass: "rc-food-status-treat",
+        description: "Sweet and juicy. Remove all seeds and core before serving.",
+        url: "/can-rabbits-eat-apples/"
+      },
+      {
+        name: "Banana",
+        keywords: "banana bananas",
+        emoji: "🍌",
+        status: "Treat only",
+        statusClass: "rc-food-status-treat",
+        description: "Very high in sugar, so only offer a tiny amount occasionally.",
+        url: "/can-rabbits-eat-bananas/"
+      },
+      {
+        name: "Strawberries",
+        keywords: "strawberry strawberries",
+        emoji: "🍓",
+        status: "Fruit guide",
+        statusClass: "rc-food-status-treat",
+        description: "An occasional fruit treat with simple portion guidance.",
+        url: "/can-rabbits-eat-strawberries/"
+      },
+      {
+        name: "Watermelon",
+        keywords: "watermelon melon",
+        emoji: "🍉",
+        status: "Fruit guide",
+        statusClass: "rc-food-status-treat",
+        description: "High in water content. Seedless flesh only and small portions.",
+        url: "/can-rabbits-eat-watermelon/"
+      }
+    ];
+
+    const input = document.getElementById("rcFoodSearch");
+    const results = document.getElementById("rcFoodResults");
+    const count = document.getElementById("rcFoodResultCount");
+    const chips = document.querySelectorAll("[data-food-chip]");
+
+    if (!input || !results || !count) return;
+
+    function renderEmpty(message) {
+      results.innerHTML = `
+        <div class="rc-food-empty">
+          <span>🥬</span>
+          <h3>${message || "Start typing a food"}</h3>
+          <p>Search by name, or choose one of the popular foods to see a quick result.</p>
+        </div>
+      `;
+    }
+
+    function renderResults(query) {
+      const search = query.trim().toLowerCase();
+
+      if (!search) {
+        count.textContent = "Try a search";
+        renderEmpty();
+        return;
+      }
+
+      const matches = foods.filter(food =>
+        food.name.toLowerCase().includes(search) ||
+        food.keywords.toLowerCase().includes(search)
+      );
+
+      count.textContent = matches.length === 1 ? "1 result" : `${matches.length} results`;
+
+      if (!matches.length) {
+        results.innerHTML = `
+          <div class="rc-food-empty">
+            <span>🔍</span>
+            <h3>No quick result found</h3>
+            <p>Try another spelling or open the full food checker to browse more foods.</p>
+          </div>
+        `;
+        return;
+      }
+
+      results.innerHTML = matches.map(food => `
+        <article class="rc-food-result">
+          <div class="rc-food-result-emoji">${food.emoji}</div>
+          <div>
+            <span class="rc-food-status ${food.statusClass}">${food.status}</span>
+            <h3>${food.name}</h3>
+            <p>${food.description}</p>
+            <a href="${food.url}">Read ${food.name.toLowerCase()} guide →</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    input.addEventListener("input", function () {
+      renderResults(input.value);
+    });
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", function () {
+        input.value = chip.dataset.foodChip;
+        renderResults(input.value);
+        input.focus();
+      });
+    });
+  })();
+</script>
+
+    <!-- ═══ FEATURED READING ═══ -->
+    <section class="rc-section rc-reveal" id="featured-reading">
+      <div class="rc-wrap">
+        <div class="rc-section-header">
+          <span class="rc-pill">Featured reading</span>
+          <h2>Popular rabbit care pages</h2>
+          <p>Move straight into the most useful care articles from one place.</p>
+        </div>
+
+        <div class="rc-articles">
+          <article class="rc-feature-post">
+            <span class="rc-pill">Essential guide</span>
+            <h3>How big should a rabbit's cage be?</h3>
+            <p>Give rabbits more than a cage: safe flooring, hides, exercise space and a setup that lets them behave naturally.</p>
+            <div class="rc-btns">
+  <a class="rc-btn rc-btn-secondary" href="/rabbit-housing-size-calculator">Use the housing calculator</a>
+  <a class="rc-btn rc-btn-primary" href="/how-big-should-a-rabbits-cage-be">Read the guide</a>
+</div>
+          </article>
+
+          <div class="rc-post-list">
+            <a class="rc-post" href="/shop">
+              <img src="/wp-content/uploads/2026/05/Rabbitcare-toys-2.png" alt="RabbitCare shop for rabbit accessories" loading="lazy" decoding="async">
+              <span><h3>RabbitCare shop</h3><p>Browse practical accessories for enrichment, grooming, feeding, cleaning and travel.</p></span>
+            </a>
+
+            <a class="rc-post" href="/best-hay-for-rabbits">
+              <img src="/wp-content/uploads/2026/05/Rabbitcare-hay-2.png" alt="Hay for rabbits guide" loading="lazy" decoding="async">
+              <span><h3>Best hay for rabbits</h3><p>What to look for in fresh, fragrant hay and why it matters every day.</p></span>
+            </a>
+
+            <a class="rc-post" href="/best-bedding-for-rabbits">
+              <img src="/wp-content/uploads/2026/05/Rabbitcare-bedding-2.png" alt="Rabbit bedding guide" loading="lazy" decoding="async">
+              <span><h3>Best bedding for rabbits</h3><p>Comfort, cleanliness and practical bedding choices for rabbit homes.</p></span>
+            </a>
+
+            <a class="rc-post" href="/rabbit-toys">
+              <img src="/wp-content/uploads/2026/05/Rabbitcare-toys-2.png" alt="Rabbit toys and enrichment guide" loading="lazy" decoding="async">
+              <span><h3>Rabbit toys and enrichment</h3><p>Safe toy ideas, chew options and activities to keep rabbits stimulated.</p></span>
+            </a>
+
+            <a class="rc-post" href="/rabbit-symptom-checker">
+  <img src="/wp-content/uploads/2026/05/ChatGPT-Image-Mar-8-2026-10_32_22-AM-1.png" alt="Rabbit symptom checker and health warning signs" loading="lazy" decoding="async">
+  <span><h3>Rabbit symptom checker</h3><p>Check warning signs and know when to call a rabbit-savvy vet.</p></span>
+</a>
+
+            <a class="rc-post" href="/rabbit-behaviour">
+              <img src="/wp-content/uploads/2026/05/Rabbitcare-new-rabbit-information-2.png" alt="Rabbit behaviour guide" loading="lazy" decoding="async">
+              <span><h3>Rabbit behaviour</h3><p>Understand body language, bonding signals and common rabbit habits.</p></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ COMMUNITY / CTA ═══ -->
+    <section class="rc-community">
+      <div class="rc-wrap rc-community-card">
+        <div>
+          <span class="rc-pill">Kind care, cosy homes</span>
+          <h2>Make every day calmer, cleaner and more enriching</h2>
+          <p>Whether your rabbits live indoors, outdoors or a mix of both, the goal is the same: space to move, safe things to chew, constant hay, clean bedding, companionship and a routine that helps you notice changes quickly.</p>
+          <div class="rc-btns">
+            <a class="rc-btn rc-btn-secondary" href="/shop">Visit the RabbitCare shop</a>
+            <a class="rc-btn rc-btn-primary" href="/learn-more">Browse all rabbit care guides</a>
+          </div>
+        </div>
+        <div class="rc-community-img">
+          <img src="/wp-content/uploads/2026/05/7ad960cc-e585-476c-a618-b842605817af-1.png" alt="Happy rabbit in a cosy enriched setup" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT CTA ═══ -->
+    <section class="rc-newsletter">
+      <div class="rc-wrap rc-newsletter-box">
+        <div>
+          <h2>Ready to browse?</h2>
+          <p>Explore RabbitCare shop categories for practical accessories, then come back to the care guides whenever you need setup, feeding or safety advice.</p>
+        </div>
+        <a class="rc-btn rc-btn-primary" href="/shop">Shop rabbit accessories</a>
+      </div>
+    </section>
+
+    <!-- ═══ DISCLAIMER ═══ -->
+    <section class="rc-disclaimer" aria-label="RabbitCare disclaimer">
+      <div class="rc-wrap">
+        <p><strong>RabbitCare.co.uk provides general rabbit care information for UK rabbit owners.</strong> It does not replace advice from a rabbit-savvy vet. If your rabbit stops eating, stops pooing, seems in pain or is suddenly unwell, contact a vet urgently.</p>
+      </div>
+    </section>
+
+  </main>
+<script>
+  (function () {
+    const slider = document.querySelector("[data-rc-shop-slider]");
+    const prev = document.querySelector("[data-rc-shop-prev]");
+    const next = document.querySelector("[data-rc-shop-next]");
+
+    if (!slider || !prev || !next) return;
+
+    function getScrollAmount() {
+      const firstSlide = slider.querySelector(".rc-shop-slide");
+      if (!firstSlide) return 260;
+
+      const sliderStyles = window.getComputedStyle(slider);
+      const gap = parseFloat(sliderStyles.columnGap || sliderStyles.gap || 14);
+
+      return firstSlide.getBoundingClientRect().width + gap;
+    }
+
+    prev.addEventListener("click", function () {
+      slider.scrollBy({
+        left: -getScrollAmount(),
+        behavior: "smooth"
+      });
+    });
+
+    next.addEventListener("click", function () {
+      slider.scrollBy({
+        left: getScrollAmount(),
+        behavior: "smooth"
+      });
+    });
+  })();
+</script>
+</section>
+</div>

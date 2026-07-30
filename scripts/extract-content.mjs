@@ -1,6 +1,8 @@
 /**
  * Extract published content pages from a WordPress WXR export.
  * Usage: node scripts/extract-content.mjs [path-to-export.xml]
+ *
+ * Rewrites media URLs to local /wp-content/uploads/ (see scripts/sync-images.mjs).
  */
 import fs from "fs";
 import path from "path";
@@ -20,7 +22,7 @@ const SKIP_SLUGS = new Set([
   "shop",
   "shop-2",
   "basket",
-  "home",
+  // home is written separately as content/home.html
 ]);
 
 if (!fs.existsSync(xmlPath)) {
@@ -42,28 +44,29 @@ function cdata(item, tag) {
   return m2 ? m2[1] : "";
 }
 
-function fixMediaUrls(html) {
-  // Absolute media host for images still hosted on the old WP site
-  const media = "https://rabbitcare.co.uk/wp-content/";
-  return html
-    .replace(/https?:\/\/rabbitcare\.co\.uk\/wp-content\//g, media)
-    .replace(/(["'(=\s])\/wp-content\//g, `$1${media}`);
-}
-
 function cleanHtml(html) {
   if (!html) return "";
   let h = html;
   h = h.replace(/^<!\[CDATA\[/, "").replace(/\]\]>$/, "");
+  // strip WP block comments only (keep HTML design comments)
   h = h.replace(/<!--\s*\/?wp:[\s\S]*?-->/g, "");
-  // Site-relative links (keep media absolute via fixMediaUrls after)
+
+  // Local media paths for Vercel (files live in public/wp-content/uploads)
+  h = h.replace(
+    /https?:\/\/rabbitcare\.co\.uk\/wp-content\/uploads\//g,
+    "/wp-content/uploads/"
+  );
+  // Any remaining absolute site links → relative
   h = h.replace(/https?:\/\/rabbitcare\.co\.uk\//g, "/");
-  // Drop trailing slashes on internal hrefs for Next.js default routing
+
+  // Drop trailing slashes on internal hrefs (Next.js default)
   h = h.replace(/href="\/([^"#?]*?)\/"/g, 'href="/$1"');
   h = h.replace(/href="\/([^"#?]*?)\/#/g, 'href="/$1#');
   h = h.replace(/href="\/([^"#?]*?)\/\?/g, 'href="/$1?');
-  h = fixMediaUrls(h);
-  // Fix broken double protocols if any
-  h = h.replace(/https:\/\/rabbitcare\.co\.uk\/https:\/\/rabbitcare\.co\.uk\//g, "https://rabbitcare.co.uk/");
+
+  // Homepage is /
+  h = h.replace(/href="\/home"/g, 'href="/"');
+
   return h.trim();
 }
 
@@ -74,7 +77,6 @@ function extractMetaDescription(html, title) {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-  // Prefer a sentence after common labels
   const cleaned = text
     .replace(/^.*?RabbitCare\.co\.uk[^.]*\.\s*/i, "")
     .replace(/Home\s*›\s*[^.]+/i, "")
@@ -100,12 +102,15 @@ function pageCategory(slug) {
     return "tool";
   if (["privacy-policy", "contact-us", "author", "learn-more"].includes(slug))
     return "info";
+  if (slug === "home") return "home";
   return "guide";
 }
 
 fs.mkdirSync(outDir, { recursive: true });
 
 const pages = [];
+let homeBody = null;
+
 for (const item of items) {
   const type = cdata(item, "wp:post_type");
   const status = cdata(item, "wp:status");
@@ -120,8 +125,14 @@ for (const item of items) {
   const category = pageCategory(slug);
   const description = extractMetaDescription(body, title);
 
-  const page = { title, slug, date, category, description, body };
+  if (slug === "home") {
+    homeBody = body;
+    fs.writeFileSync(path.join(root, "content", "home.html"), body);
+    console.log("Wrote content/home.html", body.length, "chars");
+    continue;
+  }
 
+  const page = { title, slug, date, category, description, body };
   fs.writeFileSync(path.join(outDir, `${slug}.json`), JSON.stringify(page, null, 2));
   pages.push({ title, slug, date, category, description });
 }
@@ -140,9 +151,8 @@ if (fs.existsSync(foodPath)) {
   if (m) {
     try {
       const foods = Function(`"use strict"; return (${m[1]})`)();
-      // Normalize urls without trailing slash
       for (const f of foods) {
-        if (f.url) f.url = f.url.replace(/\/$/, "");
+        if (f.url) f.url = f.url.replace(/\/$/, "").replace(/https?:\/\/rabbitcare\.co\.uk/, "");
       }
       fs.writeFileSync(
         path.join(root, "content", "foods.json"),
@@ -156,6 +166,7 @@ if (fs.existsSync(foodPath)) {
 }
 
 console.log(`Extracted ${pages.length} pages → content/pages/`);
+if (!homeBody) console.warn("No published Home page found in export");
 const byCat = {};
 for (const p of pages) byCat[p.category] = (byCat[p.category] || 0) + 1;
 console.log(byCat);

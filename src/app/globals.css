@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* Theme + utilities only — skip Tailwind preflight so your WordPress
+   page CSS is not reset (headings, lists, buttons, etc.). */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 :root {
   --rc-cream: #fff9ef;
@@ -17,7 +20,7 @@
   --rc-font-heading: Georgia, "Times New Roman", serif;
   --rc-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
-  --header-h: 72px;
+  --header-h: 60px;
 }
 
 * {
@@ -33,9 +36,8 @@ body {
   min-height: 100vh;
   color: var(--rc-charcoal);
   font-family: var(--rc-font-body);
-  background:
-    radial-gradient(circle at top left, rgba(215, 166, 75, 0.14), transparent 28rem),
-    linear-gradient(180deg, var(--rc-cream) 0%, #fffdf8 40%, #fef4f0 100%);
+  /* Neutral base — each WP page supplies its own background/theme */
+  background: #fef4f0;
   line-height: 1.65;
 }
 
@@ -674,52 +676,61 @@ img {
   opacity: 0.85;
 }
 
-/* ——— Migrated WP content tweaks ——— */
-
-.wp-migrated-content .rcb-page,
-.wp-migrated-content .rca-page,
-.wp-migrated-content .rc-page,
-.wp-migrated-content [class*="-page"].alignfull,
-.wp-migrated-content [class*="alignfull"] {
-  left: auto !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  transform: none !important;
-}
-
-/* Soften negative top margins designed for WP headers */
-.wp-migrated-content [class*="-page"] {
-  margin-top: 0 !important;
-}
+/* ——— Migrated WP content ———
+   Your export already includes full page CSS. We keep overrides minimal
+   so pages look like WordPress, while remaining readable in all browsers.
+*/
 
 /*
-  WordPress pages used scroll-driven reveal animations (opacity: 0 +
-  animation-timeline: view()). Those stay invisible in many browsers /
-  without scroll support. Force content visible on the migrated site.
+  Scroll-driven reveals (opacity: 0 + animation-timeline: view()) stay
+  invisible when unsupported. Make content visible without killing other
+  transforms used in the design.
 */
 .wp-migrated-content [class*="reveal"],
 .wp-migrated-content .rcb-reveal,
 .wp-migrated-content .rca-reveal,
-.wp-migrated-content .rc-reveal {
+.wp-migrated-content .rc-reveal,
+.wp-migrated-content .rch-reveal {
   opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
   animation-timeline: auto !important;
 }
 
-/* Ensure media from the old host displays at a sensible size */
+/* Full-bleed blocks were designed for the WP canvas; contain them under our shell */
+.wp-migrated-content {
+  overflow-x: clip;
+}
+
 .wp-migrated-content img {
   max-width: 100%;
   height: auto;
 }
 
-/* Shop links may 404 until commerce is rebuilt — keep readable, not invisible */
-.wp-migrated-content a[href*="/product/"],
-.wp-migrated-content a[href*="/product-category/"],
-.wp-migrated-content a[href*="/shop"] {
-  opacity: 0.85;
+/* Thin strip under the WordPress homepage design */
+.home-index-strip {
+  padding: 28px 14px 40px;
+  background: linear-gradient(180deg, transparent, rgba(47, 74, 46, 0.06));
+}
+
+.home-index-strip-inner {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(78, 107, 69, 0.14);
+  box-shadow: 0 12px 32px rgba(64, 43, 28, 0.08);
+}
+
+.home-index-strip-inner p {
+  margin: 0;
+  color: var(--rc-muted);
+  font-weight: 700;
+  max-width: 34rem;
 }
 
 /* ——— Full page directory ——— */

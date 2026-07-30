@@ -16,7 +16,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="site-header">
+    <header className="site-header site-header--compact">
       <div className="site-header-inner">
         <Link href="/" className="site-logo" onClick={() => setOpen(false)}>
           <span className="site-logo-mark" aria-hidden>
