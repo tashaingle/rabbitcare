@@ -18,6 +18,22 @@ export async function POST(req: Request) {
     );
   }
 
+  // Organization keys (sk_org_...) require which Stripe account to charge under
+  const stripeContext =
+    process.env.STRIPE_CONTEXT ||
+    process.env.STRIPE_ACCOUNT_ID ||
+    undefined;
+
+  if (secret.startsWith("sk_org_") && !stripeContext) {
+    return NextResponse.json(
+      {
+        error:
+          "Your Stripe key is an Organization key (sk_org_…). Add STRIPE_CONTEXT or STRIPE_ACCOUNT_ID in Vercel (your account id, e.g. acct_…), or create a normal Secret key that starts with sk_live_ / sk_test_ instead.",
+      },
+      { status: 503 }
+    );
+  }
+
   let body: { items?: BodyItem[] };
   try {
     body = await req.json();
@@ -31,6 +47,8 @@ export async function POST(req: Request) {
   }
 
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://rabbitcare-oaaa.vercel.app";
 
   for (const item of items) {
     const product = getProduct(item.slug);
@@ -60,7 +78,7 @@ export async function POST(req: Request) {
             ? [
                 product.images[0].startsWith("http")
                   ? product.images[0]
-                  : `${process.env.NEXT_PUBLIC_SITE_URL || "https://rabbitcare-oaaa.vercel.app"}${product.images[0]}`,
+                  : `${siteUrl}${product.images[0]}`,
               ]
             : undefined,
           metadata: {
@@ -72,11 +90,11 @@ export async function POST(req: Request) {
     });
   }
 
-  const stripe = new Stripe(secret);
-  const origin =
-    req.headers.get("origin") ||
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "http://localhost:3000";
+  const stripe = new Stripe(secret, {
+    stripeContext: stripeContext || undefined,
+  });
+
+  const origin = req.headers.get("origin") || siteUrl;
 
   try {
     const session = await stripe.checkout.sessions.create({

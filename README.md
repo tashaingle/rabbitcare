@@ -90,11 +90,14 @@ The shop is rebuilt on this site from your WooCommerce export:
 ### Enable payments
 
 1. Create a [Stripe](https://stripe.com) account (UK).
-2. Copy **Secret key** from Developers → API keys.
+2. Copy a **Secret key** from Developers → API keys.
+   - Prefer a normal account key: `sk_test_...` or `sk_live_...`
+   - If you only have an **organization** key (`sk_org_...`), also add your account id as `STRIPE_CONTEXT` / `STRIPE_ACCOUNT_ID` (`acct_...` — shown in Stripe Dashboard → Settings → Account details).
 3. In **Vercel** → Project → Settings → Environment Variables:
-   - `STRIPE_SECRET_KEY` = `sk_live_...` (or `sk_test_...` for testing)
-   - `NEXT_PUBLIC_SITE_URL` = your live site URL (e.g. `https://rabbitcare.co.uk`)
-4. Redeploy.
+   - `STRIPE_SECRET_KEY` = your secret key
+   - `NEXT_PUBLIC_SITE_URL` = your live site URL (e.g. `https://rabbitcare-oaaa.vercel.app`)
+   - `STRIPE_CONTEXT` = `acct_...` only if using `sk_org_...`
+4. Redeploy (env vars only apply after a new deployment).
 
 Until `STRIPE_SECRET_KEY` is set, browsing and cart work, but checkout shows a setup message.
 
