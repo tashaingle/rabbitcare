@@ -78,13 +78,29 @@ Article images currently load from the **live WordPress uploads URL**. That work
 1. Download `/wp-content/uploads/` from your host, or
 2. Use a plugin/export of media, then put files under `public/uploads/` and re-run a URL rewrite.
 
-## Shop later
+## Shop (Stripe checkout)
 
-WooCommerce does not run on Vercel. When you want the shop back, common options:
+The shop is rebuilt on this site from your WooCommerce export:
 
-- **Shopify** storefront + product links
-- **Stripe** checkout with a small product catalogue
-- **Snipcart** / similar
+- `/shop` — all products  
+- `/product/[slug]` — product page + add to cart  
+- `/product-category/[slug]` — category pages  
+- `/cart` — cart + **Pay with Stripe**
+
+### Enable payments
+
+1. Create a [Stripe](https://stripe.com) account (UK).
+2. Copy **Secret key** from Developers → API keys.
+3. In **Vercel** → Project → Settings → Environment Variables:
+   - `STRIPE_SECRET_KEY` = `sk_live_...` (or `sk_test_...` for testing)
+   - `NEXT_PUBLIC_SITE_URL` = your live site URL (e.g. `https://rabbitcare.co.uk`)
+4. Redeploy.
+
+Until `STRIPE_SECRET_KEY` is set, browsing and cart work, but checkout shows a setup message.
+
+### AliExpress fulfilment
+
+Customers pay you via Stripe. You still place the order on AliExpress yourself (or later automate). Stripe emails you payment receipts; check the Dashboard → Payments for shipping addresses.
 
 ## Tech
 

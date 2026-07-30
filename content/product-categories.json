@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "bedding",
+    "name": "Bedding",
+    "count": 5
+  },
+  {
+    "slug": "feeding-accessories",
+    "name": "Feeding Accessories",
+    "count": 5
+  },
+  {
+    "slug": "hay-bags-and-hay-feeders",
+    "name": "Hay Bags And Hay Feeders",
+    "count": 9
+  },
+  {
+    "slug": "litter-and-cleaning",
+    "name": "Litter And Cleaning",
+    "count": 4
+  },
+  {
+    "slug": "rabbit-grooming",
+    "name": "Rabbit Grooming",
+    "count": 7
+  },
+  {
+    "slug": "rabbit-photo-accessories",
+    "name": "Rabbit Photo Accessories",
+    "count": 4
+  },
+  {
+    "slug": "rabbit-toys-and-enrichment",
+    "name": "Rabbit Toys And Enrichment",
+    "count": 19
+  },
+  {
+    "slug": "rabbitcare-clothing",
+    "name": "RabbitCare Clothing",
+    "count": 8
+  },
+  {
+    "slug": "travel-and-carriers",
+    "name": "Travel And Carriers",
+    "count": 5
+  }
+]
