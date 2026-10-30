@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Instrument_Serif } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 // Used by the site header everywhere and the homepage design.
@@ -11,6 +12,10 @@ const serif = Instrument_Serif({
   variable: "--font-serif",
   display: "swap",
 });
+
+// The same Google tag Site Kit added on WordPress: Analytics, plus Google Ads.
+const GOOGLE_TAG = "GT-T9WXTVNV";
+const GOOGLE_ADS = "AW-18068045646";
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +30,8 @@ export const metadata: Metadata = {
     locale: "en_GB",
     type: "website",
   },
+  // Search Console ownership (the tag Site Kit used on WordPress).
+  verification: { google: "5VPvZVkYOohhC8dyjdY8q5ihNkHLy2IgzHeroXdPwaw" },
 };
 
 export default function RootLayout({
@@ -39,7 +46,17 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/wp/site.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG}`} strategy="afterInteractive" />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag("js", new Date());
+gtag("config", "${GOOGLE_TAG}");
+gtag("config", "${GOOGLE_ADS}");`}
+        </Script>
+      </body>
     </html>
   );
 }

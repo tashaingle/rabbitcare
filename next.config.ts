@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
       { source: "/shop/:path*", destination: "/", permanent: false },
       { source: "/product/:path*", destination: "/", permanent: false },
       { source: "/product-category/:path*", destination: "/", permanent: false },
+      // Sitemaps from WordPress (Rank Math) that Search Console may still check.
+      ...["sitemap_index", "page-sitemap", "post-sitemap", "product-sitemap", "product_cat-sitemap", "wp-sitemap"].map(
+        (name) => ({ source: `/${name}.xml`, destination: "/sitemap.xml", permanent: true })
+      ),
     ];
   },
 };

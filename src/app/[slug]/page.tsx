@@ -17,9 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const page = getLivePage(slug);
   if (!page) return {};
+  const title = decodeEntities(page.title);
+  const description = decodeEntities(page.description) || undefined;
   return {
-    title: { absolute: decodeEntities(page.title) },
-    description: decodeEntities(page.description) || undefined,
+    title: { absolute: title },
+    description,
+    alternates: { canonical: `/${slug}/` },
+    openGraph: { title, description, url: `/${slug}/` },
   };
 }
 
