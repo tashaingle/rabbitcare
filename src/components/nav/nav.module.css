@@ -42,7 +42,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 24px;
   max-width: 1360px;
   height: 76px;
@@ -53,51 +53,6 @@
 
 .solid .bar {
   height: 62px;
-}
-
-/* ——— Wordmark ——— */
-
-.brand {
-  display: inline-flex;
-  align-items: baseline;
-  font-size: 1.55rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  text-decoration: none !important;
-  color: inherit !important;
-  white-space: nowrap;
-  text-shadow: 0 1px 14px rgb(10 20 5 / 0.25);
-}
-
-.rabbit,
-.care {
-  transition: color 0.35s;
-}
-
-.care {
-  color: #ffd9a0;
-}
-
-.tld {
-  margin-left: 1px;
-  font-size: 0.62em;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  opacity: 0.8;
-}
-
-.solid .brand {
-  text-shadow: none;
-}
-
-.solid .rabbit {
-  color: #4b7a3e;
-}
-
-.solid .care,
-.solid .tld {
-  color: #7a4a2c;
 }
 
 /* ——— Desktop menu ——— */
@@ -222,8 +177,8 @@
 .panel::before {
   content: "";
   position: absolute;
-  inset: -12px 0 auto;
-  height: 12px;
+  inset: -20px 0 auto;
+  height: 20px;
 }
 
 .panelOpen {
@@ -285,13 +240,12 @@
   width: 300px;
 }
 
-.food {
-  left: 0;
-  transform: translate(-30%, 8px) scale(0.98);
+.static {
+  position: static !important;
 }
 
-.food.panelOpen {
-  transform: translate(-30%, 0) scale(1);
+.static .panel {
+  top: calc(100% - 8px);
 }
 
 .food .group {
@@ -495,14 +449,11 @@
 
   .menuButton {
     display: inline-flex;
+    margin-left: auto;
   }
 
   .bar {
     height: 62px;
-  }
-
-  .brand {
-    font-size: 1.35rem;
   }
 }
 

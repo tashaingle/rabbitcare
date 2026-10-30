@@ -67,12 +67,6 @@ export function SiteNav({ solid = false }: { solid?: boolean }) {
   return (
     <header ref={navRef} className={state}>
       <div className={s.bar}>
-        <Link href="/" className={s.brand} aria-label="RabbitCare.co.uk home">
-          <span className={s.rabbit}>rabbit</span>
-          <span className={s.care}>care</span>
-          <span className={s.tld}>.co.uk</span>
-        </Link>
-
         <nav aria-label="Main" className={s.menu}>
           <ul>
             {MENU.map((item) => (
@@ -152,7 +146,12 @@ function TopItem({
   }
   const id = `menu-${item.label.toLowerCase().replace(/\W+/g, "-")}`;
   return (
-    <li onPointerEnter={() => onHover(item.label)} onPointerLeave={() => onHover(null)}>
+    <li
+      // The wide food panel centres on the whole bar rather than its button.
+      className={item.layout === "food" ? s.static : undefined}
+      onPointerEnter={() => onHover(item.label)}
+      onPointerLeave={() => onHover(null)}
+    >
       <button
         type="button"
         className={s.top}
