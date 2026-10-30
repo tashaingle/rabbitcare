@@ -34,7 +34,7 @@ const CUTOUTS = {
   "Untitled design1": "agouti",
 };
 
-const HEROS = { "19": "meadow", "10": "pair", "17": "duo", "20": "snow" };
+const HEROS = { "21": "magpie", "19": "meadow", "10": "pair", "17": "duo", "20": "snow" };
 
 // [source, name, start seconds, duration]
 const VIDEOS = [

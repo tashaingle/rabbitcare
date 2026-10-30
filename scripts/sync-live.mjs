@@ -214,10 +214,11 @@ async function main() {
   const sharedIds = new Set();
   for (const s of home.inlineStyles) {
     if (SKIP_CSS.test(s.id)) continue;
-    // Per-page layout rules differ by page, so they live with each page.
-    if (s.id === "core-block-supports-inline-css") continue;
-    sharedIds.add(s.id);
     siteCss.push(`/* ${s.id} */\n${s.css}`);
+    // Per-page layout rules differ by page, so each page also keeps its own.
+    // The homepage's copy is shared because it covers the header and footer
+    // that Next.js-only pages render.
+    if (s.id !== "core-block-supports-inline-css") sharedIds.add(s.id);
   }
   fs.writeFileSync(path.join(publicDir, "wp", "site.css"), await localise(siteCss.join("\n\n")));
 

@@ -3,6 +3,22 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+/* Several WordPress page designs are a scrollbar's width too wide (100vw
+   blocks), which caused a sideways scroll on the old site too. */
+body {
+  overflow-x: clip;
+}
+
+/* The site header and footer (src/components/nav) replace WordPress's own.
+   The WordPress header stays invisible so page heroes keep their spacing. */
+.rc-simple-header {
+  visibility: hidden !important;
+}
+
+.wp-site-blocks > footer.wp-block-template-part {
+  display: none !important;
+}
+
 /* Colours for the Next.js-only pages (guides directory). Scoped so they
    never leak into pages mirrored from WordPress. */
 .site-main {

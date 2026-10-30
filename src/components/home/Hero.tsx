@@ -8,9 +8,9 @@ import s from "./home.module.css";
 
 /** Rabbits hiding in the grass: left %, size (vh), depth blur, delay before first peek. */
 const PEEKERS = [
-  { src: "/home/cutouts/agouti.webp", left: 55, size: 32, blur: 0.4, delay: 1.2, flip: false },
-  { src: "/home/cutouts/wild-ears.webp", left: 72, size: 40, blur: 0, delay: 2.1, flip: true },
-  { src: "/home/cutouts/lionhead.webp", left: 89, size: 29, blur: 0.6, delay: 2.8, flip: false },
+  { src: "/home/cutouts/agouti.webp", left: 9, size: 30, blur: 0.5, delay: 1.2, flip: true },
+  { src: "/home/cutouts/wild-ears.webp", left: 85, size: 40, blur: 0, delay: 2.1, flip: false },
+  { src: "/home/cutouts/lionhead.webp", left: 46, size: 24, blur: 0.9, delay: 2.8, flip: false },
 ];
 
 const HIDDEN = 108; // % of own height pushed below the hero
@@ -188,8 +188,11 @@ export function Hero() {
   return (
     <section ref={heroRef} className={s.hero} aria-labelledby="home-title">
       <picture className={s.heroPhoto}>
-        <source media="(max-width: 960px)" srcSet="/home/photos/meadow-960.webp" />
-        <img src="/home/photos/meadow-1920.webp" alt="A wild rabbit sitting in the grass, looking straight at the camera" />
+        <source media="(max-width: 960px)" srcSet="/home/photos/magpie-960.webp" />
+        <img
+          src="/home/photos/magpie-1920.webp"
+          alt="A black and white rabbit sitting in the grass with one ear up and one ear down"
+        />
       </picture>
       <canvas ref={backRef} className={`${s.grass} ${s.grassBack}`} aria-hidden="true" />
       <div className={s.peekers} aria-hidden="true">

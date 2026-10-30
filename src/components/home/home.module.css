@@ -38,22 +38,6 @@
   white-space: nowrap;
 }
 
-/* WordPress spaces every top-level block; this page handles its own rhythm. */
-.home > :global(*) {
-  margin-block-start: 0 !important;
-}
-
-/* The WordPress header floats over the hero. */
-.headerOverlay {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 50;
-}
-
-.headerOverlay :global(.wp-block-group.has-background) {
-  background: transparent !important;
-  min-height: 0 !important;
-}
 
 /* ——— Buttons ——— */
 
@@ -122,17 +106,51 @@
   width: 108%;
   height: 108%;
   object-fit: cover;
-  object-position: 30% 50%;
+  object-position: 50% 8%;
   transform: translate3d(calc(var(--mx) * -18px), calc(var(--my) * -12px + var(--scroll) * 18vh), 0)
     scale(calc(1 + var(--scroll) * 0.08));
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Narrower than the photo: slide the rabbit left so the headline has clear grass. */
-@media (min-width: 901px) and (max-aspect-ratio: 16/9) {
+/* Narrower than the photo: keep the rabbit on the right so the headline has clear grass. */
+@media (min-width: 901px) and (max-aspect-ratio: 3/2) {
   .heroPhoto img {
-    object-position: 88% 50%;
+    object-position: 12% 8%;
   }
+}
+
+/* Cream copy on a soft shade, so it reads even over black-and-white fur. */
+.heroPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(16 28 8 / 0.62), rgb(16 28 8 / 0.38) 34%, transparent 58%);
+  pointer-events: none;
+}
+
+.heroCopy {
+  color: #fff8ea;
+  text-shadow: 0 1px 18px rgb(10 20 5 / 0.35);
+}
+
+.heroCopy .heroTitle {
+  color: #fff8ea;
+}
+
+.heroCopy .heroTitle em {
+  color: #ffd9a0;
+}
+
+.heroCopy .btnDark {
+  background: #fff8ea;
+  color: var(--ink) !important;
+  text-shadow: none;
+}
+
+.heroCopy .btnGhost {
+  background: rgb(255 255 255 / 0.08);
+  color: #fff8ea;
+  box-shadow: inset 0 0 0 1.5px rgb(255 248 234 / 0.75);
 }
 
 .grass {
@@ -181,9 +199,9 @@
 .heroCopy {
   position: absolute;
   z-index: 5;
-  right: clamp(20px, 6vw, 110px);
+  left: clamp(20px, 6vw, 110px);
   top: 50%;
-  width: min(560px, 44vw);
+  width: min(540px, 40vw);
   transform: translateY(calc(-56% - var(--scroll) * 22vh));
   opacity: calc(1 - var(--scroll) * 1.6);
 }
@@ -265,16 +283,12 @@
   }
 
   .heroPhoto img {
-    object-position: 22% 50%;
+    object-position: 62% 30%;
   }
 
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0 0 45%;
-    z-index: 4;
-    background: linear-gradient(rgb(246 240 228 / 0.9), rgb(246 240 228 / 0.6) 55%, transparent);
-    pointer-events: none;
+  /* Phones: the copy sits at the top, so shade from the top instead. */
+  .heroPhoto::after {
+    background: linear-gradient(rgb(16 28 8 / 0.72), rgb(16 28 8 / 0.45) 50%, transparent 72%);
   }
 
   .heroCopy {
@@ -285,10 +299,6 @@
     transform: translateY(calc(var(--scroll) * -20vh));
   }
 
-  .heroTitle em {
-    color: var(--moss);
-    text-shadow: none;
-  }
 
   .heroLede {
     font-size: 1rem;

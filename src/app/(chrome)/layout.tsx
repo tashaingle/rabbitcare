@@ -1,16 +1,15 @@
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
+import { Footer } from "@/components/nav/Footer";
+import { SiteNav } from "@/components/nav/SiteNav";
 
-/**
- * Next.js-only pages (the guides directory) wrapped in the same WordPress
- * header and footer template parts as the mirrored pages.
- */
+/** Next.js-only pages (the guides directory): no hero photo, so the header starts solid. */
 export default function ChromeLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="wp-site-blocks">
-      <SiteHeader />
-      <main className="site-main">{children}</main>
-      <SiteFooter />
-    </div>
+    <>
+      <SiteNav solid />
+      <main className="site-main" style={{ paddingTop: 62 }}>
+        {children}
+      </main>
+      <Footer />
+    </>
   );
 }

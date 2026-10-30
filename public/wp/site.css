@@ -213,6 +213,12 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=global-styles-inline-css */
 
 
+/* core-block-supports-inline-css */
+
+.wp-container-core-group-is-layout-bad3d9d4 > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:2000px;margin-left:auto !important;margin-right:auto !important;}.wp-container-core-group-is-layout-bad3d9d4 > .alignwide{max-width:2000px;}.wp-container-core-group-is-layout-bad3d9d4 .alignfull{max-width:none;}
+/*# sourceURL=core-block-supports-inline-css */
+
+
 /* wp-block-template-skip-link-inline-css */
 
 /*! This file is auto-generated */

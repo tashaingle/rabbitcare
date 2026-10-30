@@ -1,0 +1,172 @@
+/* ——— Site footer ——— */
+
+.footer {
+  --cream: #f6f0e4;
+  position: relative;
+  margin-top: 150px;
+  padding: clamp(64px, 7vw, 100px) clamp(20px, 5vw, 80px) 36px;
+  background: #1d2414;
+  color: var(--cream);
+  font-family: var(--font-display), "Bricolage Grotesque", Inter, system-ui, sans-serif;
+}
+
+.footer a {
+  color: inherit;
+}
+
+/* A rabbit sitting on the top edge. */
+.bun {
+  position: absolute;
+  top: 0;
+  right: clamp(24px, 9vw, 160px);
+  width: clamp(110px, 11vw, 160px);
+  padding: 0;
+  border: 0;
+  background: none;
+  translate: 0 -86%;
+  cursor: pointer;
+}
+
+.bun img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.25));
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(40px, 6vw, 100px);
+  max-width: 1360px;
+  margin: 0 auto;
+}
+
+.lede {
+  margin: 0;
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  font-weight: 750;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.lede em {
+  font-family: var(--font-serif), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  color: #ffd9a0;
+}
+
+.contact {
+  display: grid;
+  gap: 4px;
+  margin: 28px 0 0;
+  color: rgb(246 240 228 / 0.7);
+}
+
+.contact a {
+  font-size: 1.15rem;
+  font-weight: 650;
+  color: var(--cream);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.notice {
+  margin: 28px 0 0;
+  padding: 16px 18px;
+  border-left: 3px solid #ffb98a;
+  border-radius: 4px 14px 14px 4px;
+  background: rgb(255 255 255 / 0.05);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgb(246 240 228 / 0.8);
+}
+
+.notice strong {
+  color: #ffb98a;
+}
+
+.notice a {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.colTitle {
+  margin: 0 0 14px;
+  font-family: var(--font-serif), "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #ffd9a0;
+}
+
+.columns ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns li + li {
+  margin-top: 10px;
+}
+
+.columns a {
+  font-size: 0.98rem;
+  text-decoration: none;
+  color: rgb(246 240 228 / 0.82);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: color 0.2s, background-size 0.3s;
+}
+
+.columns a:hover {
+  color: var(--cream);
+  background-size: 100% 1px;
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1360px;
+  margin: clamp(48px, 6vw, 80px) auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgb(246 240 228 / 0.14);
+  font-size: 0.88rem;
+  color: rgb(246 240 228 / 0.6);
+}
+
+.bottom p {
+  margin: 0;
+}
+
+.bottom button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.bottom button:hover {
+  color: var(--cream);
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 36px;
+  }
+}
