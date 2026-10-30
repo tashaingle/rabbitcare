@@ -8,7 +8,13 @@ import { useEffect, useRef } from "react";
  * immediately (and without waiting for hydration). Scripts are re-executed
  * after mount so interactive tools still work.
  */
-export function WpContent({ html }: { html: string }) {
+export function WpContent({
+  html,
+  className = "wp-migrated-content",
+}: {
+  html: string;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,7 +38,7 @@ export function WpContent({ html }: { html: string }) {
   return (
     <div
       ref={ref}
-      className="wp-migrated-content"
+      className={className}
       // Trusted content from your own WordPress export
       dangerouslySetInnerHTML={{ __html: html }}
     />

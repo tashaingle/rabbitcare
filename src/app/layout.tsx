@@ -1,19 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
 import { CartProvider } from "@/lib/cart";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -37,12 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CartProvider>
-          <SiteHeader />
-          <main className="site-main">{children}</main>
-          <SiteFooter />
-        </CartProvider>
+      <head>
+        {/* Theme and block styles copied from WordPress (scripts/sync-live.mjs) */}
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="/wp/site.css" />
+      </head>
+      <body>
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
