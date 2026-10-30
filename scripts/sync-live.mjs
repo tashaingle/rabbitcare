@@ -15,6 +15,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { parseHTML } from "linkedom";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -22,7 +23,7 @@ const ORIGIN = "https://rabbitcare.co.uk";
 const publicDir = path.join(root, "public");
 const liveDir = path.join(root, "content", "live");
 
-// WooCommerce pages are rebuilt in Next.js (shop, product, cart, Stripe).
+// WooCommerce pages: the shop is closed on this site for now.
 const SKIP_SLUGS = new Set([
   "cart",
   "checkout",
@@ -93,6 +94,66 @@ function absolutiseCss(css, cssUrl) {
   });
 }
 
+const SHOP_HREF = /^(https?:\/\/(www\.)?rabbitcare\.co\.uk)?\/(shop|product|product-category|basket|cart|checkout|my-account)(\/|$)/;
+
+/**
+ * The shop is closed for now: drop the menu, footer column, shop sections,
+ * product cards and any other links into WooCommerce.
+ */
+function removeShop(html) {
+  const { document } = parseHTML(`<!doctype html><html><body>${html}</body></html>`);
+  const text = (el) => el.textContent.trim();
+  const removeLink = (a) => {
+    const li = a.parentElement?.tagName === "LI" ? a.parentElement : null;
+    (li || a).remove();
+  };
+
+  // Header "Shop" dropdown
+  for (const label of [...document.querySelectorAll(".rc-header-dropdown-label")]) {
+    if (text(label) === "Shop") label.closest(".rc-header-item")?.remove();
+  }
+  // Footer "Shop" column
+  for (const h of [...document.querySelectorAll("footer h2, footer h3, footer summary")]) {
+    if (text(h) === "Shop") h.parentElement?.remove();
+  }
+  // Whole shop sections, recognised by their "RabbitCare shop" label
+  const removedIds = new Set();
+  for (const el of [...document.querySelectorAll("[class*='pill']")]) {
+    if (text(el).toLowerCase() !== "rabbitcare shop") continue;
+    const section = el.closest("section");
+    if (section) {
+      if (section.id) removedIds.add(section.id);
+      section.remove();
+    }
+  }
+  // The homepage "Toys and enrichment" card points at the toys guide instead
+  for (const a of [...document.querySelectorAll("a.rc-card-link")]) {
+    if (SHOP_HREF.test(a.getAttribute("href") || "")) {
+      a.setAttribute("href", "/rabbit-toys/");
+      a.textContent = "Explore rabbit toys";
+    }
+  }
+  // Any remaining links into the shop, or to the sections removed above
+  for (const a of [...document.querySelectorAll("a[href]")]) {
+    const href = a.getAttribute("href");
+    if (SHOP_HREF.test(href) || (href.startsWith("#") && removedIds.has(href.slice(1)))) {
+      removeLink(a);
+    }
+  }
+  // Button rows left empty
+  for (const row of [...document.querySelectorAll("[class*='btns']")]) {
+    if (!row.querySelector("a, button")) row.remove();
+  }
+  // Calls to action that only pointed at the shop (homepage "Ready to browse?")
+  for (const section of [...document.querySelectorAll("section")]) {
+    if (!section.querySelector("a") && /RabbitCare shop/i.test(section.textContent)) section.remove();
+  }
+
+  return document.body.innerHTML
+    .replace(/UK rabbit advice &(amp;|#038;) shop/g, "UK rabbit advice")
+    .replace(/,\s*plus carefully chosen rabbit care accessories,[^.<]*gift products\./g, ".");
+}
+
 function splitPage(html) {
   const headEnd = html.indexOf("</head>");
   const head = html.slice(0, headEnd);
@@ -160,8 +221,8 @@ async function main() {
   }
   fs.writeFileSync(path.join(publicDir, "wp", "site.css"), await localise(siteCss.join("\n\n")));
 
-  fs.writeFileSync(path.join(root, "content", "chrome", "header.html"), await localise(home.header));
-  fs.writeFileSync(path.join(root, "content", "chrome", "footer.html"), await localise(home.footer));
+  fs.writeFileSync(path.join(root, "content", "chrome", "header.html"), await localise(removeShop(home.header)));
+  fs.writeFileSync(path.join(root, "content", "chrome", "footer.html"), await localise(removeShop(home.footer)));
 
   const write = async (slug, page) => {
     const pageCss = page.inlineStyles
@@ -174,7 +235,7 @@ async function main() {
       description: page.description,
       bodyClass: page.bodyClass,
       css: await localise(pageCss),
-      html: await localise(page.header + page.main + page.footer),
+      html: await localise(removeShop(page.header + page.main + page.footer)),
     };
     fs.writeFileSync(path.join(liveDir, `${slug}.json`), JSON.stringify(data, null, 1));
   };
