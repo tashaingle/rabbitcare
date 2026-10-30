@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { Meadow, type Pointer } from "./meadow";
 import s from "./home.module.css";
 
-/** Rabbits hiding in the grass: left %, size (vh), depth blur, delay before first peek. */
+/** Rabbits hiding in the grass: left %, size (% of the photo's height), depth blur, delay before first peek. */
 const PEEKERS = [
   { src: "/home/cutouts/agouti.webp", left: 9, size: 30, blur: 0.5, delay: 1.2, flip: true },
   { src: "/home/cutouts/wild-ears.webp", left: 85, size: 40, blur: 0, delay: 2.1, flip: false },
@@ -19,6 +19,7 @@ const PEEK = 28; // head and shoulders out of the grass
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const backRef = useRef<HTMLCanvasElement>(null);
   const midRef = useRef<HTMLCanvasElement>(null);
   const frontRef = useRef<HTMLCanvasElement>(null);
@@ -27,6 +28,8 @@ export function Hero() {
 
   useEffect(() => {
     const hero = heroRef.current!;
+    // The photo, grass and rabbits: the whole hero on desktop, the lower half on phones.
+    const stage = stageRef.current!;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const meadow = new Meadow(backRef.current!, midRef.current!, frontRef.current!);
     const pointer: Pointer = { x: -9999, y: -9999, vx: 0, vy: 0, inside: false };
@@ -37,10 +40,10 @@ export function Hero() {
     let warned = false;
     let last = { x: 0, y: 0, t: 0 };
 
-    const resize = () => meadow.resize(hero.clientWidth, hero.clientHeight);
+    const resize = () => meadow.resize(stage.clientWidth, stage.clientHeight);
     resize();
     const ro = new ResizeObserver(resize);
-    ro.observe(hero);
+    ro.observe(stage);
 
     gsap.set(rabbits, { yPercent: HIDDEN });
 
@@ -70,9 +73,11 @@ export function Hero() {
       if (!warned && toastRef.current) {
         warned = true;
         const box = r.getBoundingClientRect();
-        const heroBox = hero.getBoundingClientRect();
+        const stageBox = stage.getBoundingClientRect();
         const toast = toastRef.current;
-        toast.style.left = `${Math.min(box.left - heroBox.left, heroBox.width - 300)}px`;
+        // Next to the rabbit that ducked, but never off the edge of the screen.
+        const left = box.left - stageBox.left + box.width / 2 - toast.offsetWidth / 2;
+        toast.style.left = `${Math.max(12, Math.min(left, stageBox.width - toast.offsetWidth - 12))}px`;
         gsap.fromTo(toast, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "back.out(2)" });
         gsap.to(toast, { autoAlpha: 0, y: -8, delay: 4.5, duration: 0.5 });
       }
@@ -86,7 +91,7 @@ export function Hero() {
     }
 
     const onMove = (e: PointerEvent) => {
-      const box = hero.getBoundingClientRect();
+      const box = stage.getBoundingClientRect();
       const x = e.clientX - box.left;
       const y = e.clientY - box.top;
       const now = performance.now();
@@ -187,31 +192,38 @@ export function Hero() {
 
   return (
     <section ref={heroRef} className={s.hero} aria-labelledby="home-title">
-      <picture className={s.heroPhoto}>
-        <source media="(max-width: 960px)" srcSet="/home/photos/magpie-960.webp" />
-        <img
-          src="/home/photos/magpie-1920.webp"
-          alt="A black and white rabbit sitting in the grass with one ear up and one ear down"
-        />
-      </picture>
-      <canvas ref={backRef} className={`${s.grass} ${s.grassBack}`} aria-hidden="true" />
-      <div className={s.peekers} aria-hidden="true">
-        {PEEKERS.map((p, i) => (
-          <div
-            key={p.src}
-            ref={(el) => {
-              rabbitRefs.current[i] = el;
-            }}
-            className={s.peeker}
-            style={{ left: `${p.left}%`, height: `${p.size}vh`, filter: p.blur ? `blur(${p.blur}px)` : undefined }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={p.src} alt="" style={p.flip ? { transform: "scaleX(-1)" } : undefined} />
-          </div>
-        ))}
+      <div ref={stageRef} className={s.stage}>
+        <picture className={s.heroPhoto}>
+          <source media="(max-width: 960px)" srcSet="/home/photos/magpie-960.webp" />
+          <img
+            src="/home/photos/magpie-1920.webp"
+            alt="A black and white rabbit sitting in the grass with one ear up and one ear down"
+          />
+        </picture>
+        <canvas ref={backRef} className={`${s.grass} ${s.grassBack}`} aria-hidden="true" />
+        <div className={s.peekers} aria-hidden="true">
+          {PEEKERS.map((p, i) => (
+            <div
+              key={p.src}
+              ref={(el) => {
+                rabbitRefs.current[i] = el;
+              }}
+              className={s.peeker}
+              style={{ left: `${p.left}%`, height: `${p.size}%`, filter: p.blur ? `blur(${p.blur}px)` : undefined }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.src} alt="" style={p.flip ? { transform: "scaleX(-1)" } : undefined} />
+            </div>
+          ))}
+        </div>
+        <canvas ref={midRef} className={`${s.grass} ${s.grassMid}`} aria-hidden="true" />
+        <canvas ref={frontRef} className={`${s.grass} ${s.grassFront}`} aria-hidden="true" />
+
+        <p ref={toastRef} className={s.toast} role="status">
+          <strong>Eep, too fast!</strong> Rabbits are prey animals, so sudden movement means danger. Keep still and
+          they&rsquo;ll come back.
+        </p>
       </div>
-      <canvas ref={midRef} className={`${s.grass} ${s.grassMid}`} aria-hidden="true" />
-      <canvas ref={frontRef} className={`${s.grass} ${s.grassFront}`} aria-hidden="true" />
 
       <div className={s.heroCopy}>
         <p className={s.kicker}>RabbitCare.co.uk · Rabbit care for UK owners</p>
@@ -235,11 +247,6 @@ export function Hero() {
           <span aria-hidden="true">↘</span> Move slowly through the grass. They&rsquo;re watching you.
         </p>
       </div>
-
-      <p ref={toastRef} className={s.toast} role="status">
-        <strong>Eep, too fast!</strong> Rabbits are prey animals, so sudden movement means danger. Keep still and
-        they&rsquo;ll come back.
-      </p>
     </section>
   );
 }

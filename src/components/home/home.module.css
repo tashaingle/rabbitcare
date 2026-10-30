@@ -100,6 +100,13 @@
   cursor: crosshair;
 }
 
+/* Photo, grass and rabbits. Fills the hero on desktop; sits under the copy on phones. */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
 .heroPhoto img {
   position: absolute;
   inset: -4%;
@@ -260,7 +267,7 @@
   position: absolute;
   z-index: 8;
   bottom: 7vh;
-  width: 290px;
+  width: min(290px, calc(100% - 24px));
   margin: 0;
   padding: 14px 16px;
   border-radius: 18px 18px 18px 4px;
@@ -277,26 +284,45 @@
   font-size: 1.05rem;
 }
 
+/* Phones: the copy gets its own green band, with the photo underneath so
+   the text never sits on the rabbit's face. */
 @media (max-width: 900px) {
   .hero {
-    min-height: 680px;
-  }
-
-  .heroPhoto img {
-    object-position: 62% 30%;
-  }
-
-  /* Phones: the copy sits at the top, so shade from the top instead. */
-  .heroPhoto::after {
-    background: linear-gradient(rgb(16 28 8 / 0.72), rgb(16 28 8 / 0.45) 50%, transparent 72%);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    background: #1f2b17;
   }
 
   .heroCopy {
-    top: 76px;
-    left: 20px;
-    right: 20px;
+    position: relative;
+    order: 1;
+    inset: auto;
     width: auto;
-    transform: translateY(calc(var(--scroll) * -20vh));
+    padding: 80px 20px 4px;
+    transform: none;
+    opacity: 1;
+  }
+
+  .stage {
+    position: relative;
+    order: 2;
+    inset: auto;
+    height: clamp(300px, 82vw, 520px);
+  }
+
+  .heroPhoto img {
+    object-position: 66% 0%;
+  }
+
+  /* Blend the top of the photo into the green band. */
+  .heroPhoto::after {
+    background: linear-gradient(#1f2b17, rgb(31 43 23 / 0) 30%);
+  }
+
+  .toast {
+    bottom: 16px;
   }
 
 
