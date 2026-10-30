@@ -1,32 +1,29 @@
 import Link from "next/link";
 import type { PageMeta } from "@/lib/content";
+import s from "@/components/guides/guide.module.css";
 
 const CATEGORY_META: Record<
   string,
-  { title: string; blurb: string; icon: string; order: number }
+  { title: string; blurb: string; order: number }
 > = {
   tool: {
     title: "Care tools",
     blurb: "Interactive checkers and calculators for everyday rabbit care.",
-    icon: "🛠️",
     order: 1,
   },
   guide: {
     title: "Care guides",
     blurb: "Housing, diet, health, behaviour, bedding, toys and more.",
-    icon: "📖",
     order: 2,
   },
   food: {
     title: "Can rabbits eat…?",
     blurb: "Detailed guides for individual fruits, vegetables and treats.",
-    icon: "🥕",
     order: 3,
   },
   info: {
     title: "About this site",
     blurb: "Contact, author and site information.",
-    icon: "ℹ️",
     order: 4,
   },
 };
@@ -58,15 +55,13 @@ export function PageDirectory({
   });
 
   return (
-    <div className="directory">
+    <div className={s.guide}>
       {showHero && (
-        <header className="directory-hero">
-          <span className="pill">Full site index</span>
-          <h1>{heading}</h1>
-          <p>{intro}</p>
-          <p className="directory-count">
-            <strong>{pages.length}</strong> pages available
-          </p>
+        <header className={`${s.section} ${s.compact}`}>
+          <p className={s.eyebrow}>Full site index</p>
+          <h1 className={s.h2}>{heading}</h1>
+          <p className={s.sub}>{intro}</p>
+          <p className={s.sub}>{pages.length} pages</p>
         </header>
       )}
 
@@ -74,43 +69,19 @@ export function PageDirectory({
         const meta = CATEGORY_META[category] ?? {
           title: category,
           blurb: "",
-          icon: "📄",
         };
-        const sorted = [...items].sort((a, b) =>
-          a.title.localeCompare(b.title)
-        );
+        const sorted = [...items].sort((a, b) => a.title.localeCompare(b.title));
 
         return (
-          <section
-            key={category}
-            className="directory-section"
-            id={category}
-            aria-labelledby={`dir-${category}`}
-          >
-            <div className="directory-section-head">
-              <span className="directory-icon" aria-hidden>
-                {meta.icon}
-              </span>
-              <div>
-                <h2 id={`dir-${category}`}>
-                  {meta.title}{" "}
-                  <span className="directory-badge">{sorted.length}</span>
-                </h2>
-                {meta.blurb && <p>{meta.blurb}</p>}
-              </div>
-            </div>
-
-            <ul className="directory-list">
+          <section className={`${s.section} ${s.compact}`} id={category} key={category} aria-labelledby={`dir-${category}`}>
+            <h2 id={`dir-${category}`} className={s.title}>
+              {meta.title}
+            </h2>
+            {meta.blurb && <p className={s.sub}>{meta.blurb}</p>}
+            <ul className={s.ticks}>
               {sorted.map((page) => (
                 <li key={page.slug}>
-                  <Link href={`/${page.slug}`}>
-                    <span className="directory-link-title">{page.title}</span>
-                    {page.description && (
-                      <span className="directory-link-desc">
-                        {page.description}
-                      </span>
-                    )}
-                  </Link>
+                  <Link href={`/${page.slug}/`}>{page.title}</Link>
                 </li>
               ))}
             </ul>
