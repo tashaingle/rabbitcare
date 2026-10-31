@@ -24,14 +24,16 @@
 .solid {
   --nav-ink: #1d2414;
   --nav-muted: #5f6558;
-  background: rgb(251 247 239 / 0.86);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
   box-shadow: 0 1px 0 rgb(29 36 20 / 0.08), 0 12px 30px -18px rgb(40 30 10 / 0.35);
 }
 
+/* The blur has to sit on this layer, not on the header. A filter on the
+   header becomes the phone menu's containing block and squashes it. */
 .solid::before {
-  opacity: 0;
+  inset: 0;
+  background: rgb(251 247 239 / 0.86);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
 }
 
 .tucked {
@@ -318,6 +320,7 @@
 
 .sheet {
   position: fixed;
+  z-index: 1;
   inset: 62px 0 0;
   overflow-y: auto;
   padding: 12px 20px 40px;
