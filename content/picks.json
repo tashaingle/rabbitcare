@@ -1,0 +1,105 @@
+{
+  "_howTo": "Product picks shown in the guides. Paste your affiliate link into \"url\" and set \"shop\" to where it goes (e.g. \"Amazon UK\", \"Zooplus\"). Picks with an empty url are hidden on the live site.",
+  "best-hay-for-rabbits": {
+    "title": "Hay we'd reach for",
+    "intro": "Good hay should smell sweet, look green and feel soft rather than dusty. These are reliable places to start.",
+    "picks": [
+      {
+        "badge": "Everyday hay",
+        "product": "Oxbow Western Timothy Hay",
+        "why": "High in fibre and low in calcium, so it suits most adult rabbits as their main hay.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "For fussy eaters",
+        "product": "Oxbow Orchard Grass Hay",
+        "why": "Softer and sweeter-smelling than timothy, which can tempt rabbits that pick at their hay.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "Best value",
+        "product": "Large bale of meadow hay",
+        "why": "A mix of grasses with different textures, and far cheaper per kilo for homes with more than one rabbit.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "Keeps it clean",
+        "product": "Wall-mounted hay rack",
+        "why": "Keeps hay off the floor and away from the litter area, so more of it gets eaten instead of trampled.",
+        "shop": "Amazon UK",
+        "url": ""
+      }
+    ]
+  },
+  "best-bedding-for-rabbits": {
+    "title": "Bedding we'd reach for",
+    "intro": "Safe if nibbled, absorbent and low in dust. Avoid cedar, untreated pine, clay cat litter and anything scented.",
+    "picks": [
+      {
+        "badge": "Safest all-rounder",
+        "product": "Carefresh paper bedding",
+        "why": "Soft, absorbent, low-dust recycled paper that's safe if your rabbit nibbles it.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "For the litter tray",
+        "product": "Paper pellet litter",
+        "why": "Compressed paper pellets soak up urine well and keep the tray easy to clean.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "Wood option",
+        "product": "Dust-extracted aspen shavings",
+        "why": "Aspen doesn't contain the aromatic oils found in pine and cedar, so it's a safer wood choice.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "Reusable",
+        "product": "Washable fleece liners",
+        "why": "Popular for indoor setups: moisture wicks through to the absorbent layer underneath, and they go in the wash.",
+        "shop": "Amazon UK",
+        "url": ""
+      }
+    ]
+  },
+  "rabbit-toys": {
+    "title": "Toys we'd reach for",
+    "intro": "Look for untreated, natural materials with no small parts that could be swallowed.",
+    "picks": [
+      {
+        "badge": "For chewing",
+        "product": "Willow balls",
+        "why": "Natural, safe to chew, and fun to toss and roll around.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "For teeth",
+        "product": "Apple wood chew sticks",
+        "why": "Untreated fruit wood gives rabbits something worthwhile to gnaw instead of your skirting boards.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "For hiding",
+        "product": "Willow or hay tunnel",
+        "why": "Rabbits love a safe tunnel to dash through and hide in, and these are good to nibble too.",
+        "shop": "Amazon UK",
+        "url": ""
+      },
+      {
+        "badge": "For foraging",
+        "product": "Snuffle mat",
+        "why": "Hide pellets or herbs in it to turn feeding time into a sniffing, searching game.",
+        "shop": "Amazon UK",
+        "url": ""
+      }
+    ]
+  }
+}

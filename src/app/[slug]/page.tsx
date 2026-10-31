@@ -4,6 +4,7 @@ import { Article } from "@/components/guides/Article";
 import { LivePage } from "@/components/LivePage";
 import { NewOwner, newOwnerMetadata } from "@/components/guides/NewOwner";
 import { getArticle, isBoilerplate } from "@/lib/article";
+import { getPicks } from "@/lib/picks";
 import { decodeEntities, getLivePage, getLiveSlugs } from "@/lib/content";
 
 type Props = {
@@ -43,5 +44,5 @@ export default async function ContentPage({ params }: Props) {
   if (!page) notFound();
   const article = getArticle(slug);
   if (!article) return <LivePage page={page} />;
-  return <Article article={article} />;
+  return <Article article={article} picks={getPicks(slug)} />;
 }

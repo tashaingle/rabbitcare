@@ -4,17 +4,24 @@ import Script from "next/script";
 import type { Article as ArticleData, Block, LinkItem } from "@/lib/article";
 import { Footer } from "@/components/nav/Footer";
 import { SiteNav } from "@/components/nav/SiteNav";
+import type { Picks } from "@/lib/picks";
+import { PicksBox } from "./PicksBox";
 import s from "./guide.module.css";
 
 const POSITIONS = ["50% 42%", "64% 40%", "38% 36%", "72% 48%", "46% 58%"];
 
-export function Article({ article }: { article: ArticleData }) {
+export function Article({ article, picks }: { article: ArticleData; picks?: Picks | null }) {
   const { lead, em } = emphasis(article.title);
   const quickbar = article.quickbar.slice(0, 4);
   const showQuick = article.quick.length > 0 && article.quick.length <= 6;
   const used = new Set<string>([article.photos[0]]);
   const take = (preferred?: string) => takePhoto(used, article.photos, preferred);
-  let prose = 0;
+  // How many prose blocks come before each block (decides which get photos).
+  const proseBefore = article.blocks.map(
+    (_, index) => article.blocks.slice(0, index).filter((block) => block.type === "prose").length
+  );
+  // Product picks go just before the FAQ, related guides or closing section.
+  const picksAt = picks ? firstIndex(article.blocks, ["faq", "related", "close"]) : -1;
 
   return (
     <div className={s.guide}>
@@ -91,21 +98,24 @@ export function Article({ article }: { article: ArticleData }) {
         )}
 
         {article.blocks.map((block, index) => {
+          const box = index === picksAt && picks ? <PicksBox key="picks" picks={picks} /> : null;
           if (block.type === "prose") {
             const amount = block.paragraphs.join(" ").length + block.items.join(" ").length;
+            const prose = proseBefore[index];
             const withPhoto = prose === 0 || (prose % 3 === 0 && amount < 900);
-            prose += 1;
             return (
               <Prose
                 key={blockKey(block, index)}
                 block={block}
                 photo={withPhoto ? take(block.image) : undefined}
-                large={prose === 1}
+                large={prose === 0}
               />
             );
           }
-          return <BlockView key={blockKey(block, index)} block={block} take={take} />;
+          const view = <BlockView key={blockKey(block, index)} block={block} take={take} />;
+          return box ? [box, view] : view;
         })}
+        {picks && picksAt === -1 && <PicksBox picks={picks} />}
       </main>
       <Footer />
       {article.script && (
@@ -358,6 +368,10 @@ function emphasis(title: string): { lead: string; em: string } {
 function photoSpot(slug: string): string {
   const n = [...slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
   return POSITIONS[n % POSITIONS.length];
+}
+
+function firstIndex(blocks: Block[], types: Block["type"][]): number {
+  return blocks.findIndex((block) => types.includes(block.type));
 }
 
 function blockKey(block: Block, index: number): string {

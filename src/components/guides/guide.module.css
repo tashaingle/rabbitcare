@@ -1268,3 +1268,97 @@
     transition: none;
   }
 }
+
+/* ——— Our picks (affiliate products) ——— */
+
+.picks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.picks li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: 0 0 0 1px rgb(29 36 20 / 0.08);
+}
+
+.pickBadge {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #efe5d0;
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: #7a4a2c;
+}
+
+.picks strong {
+  font-size: 1.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.picks p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.pickLink {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 0.65em 1.1em;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--cream) !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.pickLink:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+
+.pickMissing {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 0.5em 0.9em;
+  border: 1.5px dashed var(--carrot);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--carrot);
+}
+
+.pickNote {
+  margin: 24px 0 0;
+  max-width: 52em;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.7;
+}
+
+@media (max-width: 1100px) {
+  .picks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .picks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
