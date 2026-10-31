@@ -74,13 +74,15 @@ export function Article({ article, picks }: { article: ArticleData; picks?: Pick
         )}
 
         {showQuick && (
-          <section className={s.section} aria-label="Quick answer">
-            <p className={s.eyebrow}>Quick answer</p>
-            <ul className={article.quick.length > 4 ? s.signWords : s.ticks}>
-              {article.quick.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+          <section className={`${s.section} ${s.quickWrap}`} aria-label="Quick answer">
+            <div className={s.quickBox}>
+              <p className={s.quickLabel}>Quick answer</p>
+              <ul className={s.quickList}>
+                {article.quick.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </section>
         )}
 
@@ -167,23 +169,28 @@ function Prose({
 
   return (
     <section className={s.section} id={block.id && !block.title ? block.id : undefined}>
-      <div className={s.prose}>
-        {block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
+      <div className={block.title ? s.split : undefined}>
         {block.title && (
-          <h2 id={block.id} className={large ? s.h2 : s.title}>
-            {block.title}
-          </h2>
+          <div className={s.splitHead}>
+            {block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
+            <h2 id={block.id} className={large ? s.h2 : s.title}>
+              {block.title}
+            </h2>
+          </div>
         )}
-        {block.paragraphs.map((paragraph, index) => (
-          <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
-        ))}
-        {block.items.length > 0 && (
-          <ul className={titled ? s.tips : s.ticks}>
-            {block.items.map((item, index) => (
-              <li key={index} dangerouslySetInnerHTML={{ __html: item }} />
-            ))}
-          </ul>
-        )}
+        <div className={s.prose}>
+          {!block.title && block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
+          {block.paragraphs.map((paragraph, index) => (
+            <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
+          ))}
+          {block.items.length > 0 && (
+            <ul className={titled ? s.tips : s.ticks}>
+              {block.items.map((item, index) => (
+                <li key={index} dangerouslySetInnerHTML={{ __html: item }} />
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
       {photo && (
         <figure className={`${s.frame} ${s.band}`}>
@@ -197,7 +204,7 @@ function Prose({
 
 function Cards({ block }: { block: Extract<Block, { type: "cards" }> }) {
   return (
-    <section className={s.section} id={block.id}>
+    <section className={`${s.section} ${s.cream}`} id={block.id}>
       {block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
       {block.title && <h2 className={s.title}>{block.title}</h2>}
       {block.intro && <p className={s.sub} dangerouslySetInnerHTML={{ __html: block.intro }} />}
@@ -251,10 +258,12 @@ function Warning({ block }: { block: Extract<Block, { type: "warning" }> }) {
 
 function Faq({ block }: { block: Extract<Block, { type: "faq" }> }) {
   return (
-    <section className={`${s.section} ${s.cream}`} id={block.id || "faq"}>
-      {block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
-      <h2 className={s.h2}>{block.title}</h2>
-      {block.intro && <p className={s.sub} dangerouslySetInnerHTML={{ __html: block.intro }} />}
+    <section className={`${s.section} ${s.faqSplit}`} id={block.id || "faq"}>
+      <div className={s.splitHead}>
+        {block.eyebrow && <p className={s.eyebrow}>{block.eyebrow}</p>}
+        <h2 className={s.title}>{block.title}</h2>
+        {block.intro && <p className={s.sub} dangerouslySetInnerHTML={{ __html: block.intro }} />}
+      </div>
       <div className={s.faqList}>
         {block.items.map((item) => (
           <details key={item.q}>
